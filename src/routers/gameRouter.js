@@ -1,8 +1,9 @@
 import express from "express";
-import { gameInfo, play } from "../controllers/gameController";
+import { games, gameInfo, play } from "../controllers/gameController";
 
 const gameRouter = express.Router();
 
+gameRouter.get("/", games);
 gameRouter.get("/:id", gameInfo);
 gameRouter.get("/:id/play", play);
 

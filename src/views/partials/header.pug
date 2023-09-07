@@ -4,6 +4,17 @@ header
             li 
                 a(href="/") 🏠 Home
             li 
-                a(href="/users") 👤 My page
-            li 
                 a(href="/games") ♣️ Game
+            
+            if loggedIn
+                li 
+                    a(href="/users/logout") 🚪 Logout
+                li 
+                    a(href=`/users/${loggedInUser._id}`) 👤 My page
+            else 
+                li 
+                    a(href="/join") 🤝 Join
+                li 
+                    a(href="/login") 🚪 Login
+            if loggedIn
+                h2 #{loggedInUser.username} 🖐️
