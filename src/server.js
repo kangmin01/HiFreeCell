@@ -28,6 +28,7 @@ app.use(
 );
 
 app.use(localsMiddleware);
+app.use("/images", express.static("images"));
 app.use("/", rootRouter);
 app.use("/games", gameRouter);
 app.use("/users", userRouter);
