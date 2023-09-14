@@ -1,6 +1,24 @@
 extends layout/layout
+include mixins/card
 
 block content
     h1=pageTitle
 
-    a(href="/games/12/play") random start
+    div.table
+        div.cell
+            div.freeCell
+                each id in [0,1,2,3]
+                    div(id=`free${id}` class="free")
+            div.homeCell
+                each id in [0,1,2,3]
+                    div(id=`home${id}` class="home")
+        div.deck
+            each column, idx in game.deck
+                div(id=`column${idx}` class="column")
+                    each card in column
+                        +card(card)
+    
+
+
+block scripts
+    script(src="/static/js/gamePlay.js")
