@@ -19,12 +19,16 @@
     justify-content: center;
   }
 
-  .freeCell div,
-  .homeCell div {
+  .freeCell .free,
+  .homeCell .home {
     border: 3px lightskyblue solid;
-    width: 110px;
+    width: 100px;
     height: 100%;
     margin: 0 15px;
+
+    img {
+      width: 100%;
+    }
   }
 }
 
