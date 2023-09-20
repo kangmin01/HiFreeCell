@@ -3,6 +3,25 @@
 
   width: 1300px;
   margin: auto;
+
+  #time {
+    display: flex;
+    background-color: blanchedalmond;
+    font-size: 30px;
+    width: 150px;
+    height: 60px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .button {
+    display: flex;
+    button {
+      font-size: 20px;
+      width: 120px;
+      height: 60px;
+    }
+  }
 }
 
 .cell {

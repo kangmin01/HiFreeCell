@@ -3,6 +3,7 @@ import "../scss/styles.scss";
 let freeCells = document.querySelectorAll(".free");
 let homeCells = document.querySelectorAll(".home");
 let columns = document.querySelectorAll(".column");
+const cards = document.querySelectorAll(".card");
 
 const FREE = [null, null, null, null];
 const HOME = [[], [], [], []];
@@ -11,6 +12,7 @@ const MOVABLE_COLUMN = [[], [], [], [], [], [], [], []];
 
 const undoStack = [];
 
+const time = document.getElementById("time");
 const newGameBtn = document.getElementById("btn_newGame");
 const retryBtn = document.getElementById("btn_retry");
 const undoBtn = document.getElementById("btn_undo");
@@ -240,6 +242,39 @@ for (let homeCell of homeCells) {
   });
 }
 
+let startTime;
+let timerStarted = false;
+
+const startTimer = () => {
+  timerStarted = true;
+  startTime = new Date().getTime();
+  setInterval(updateTimer, 1000);
+};
+
+const updateTimer = () => {
+  if (!timerStarted) return;
+
+  const currentTime = new Date().getTime();
+  const elapsedTime = Math.floor((currentTime - startTime) / 1000);
+
+  const hours = Math.floor(elapsedTime / 3600);
+  const minutes = Math.floor(elapsedTime / 60);
+  const seconds = elapsedTime % 60;
+
+  const formattedTime = `${String(hours).padStart(2, "0")}:${String(
+    minutes
+  ).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+  time.innerText = formattedTime;
+};
+
+for (let card of cards) {
+  card.addEventListener("mousedown", (e) => {
+    if (!timerStarted) {
+      startTimer();
+    }
+  });
+}
+
 const handleNewGame = () => {
   console.log("New game");
 };
@@ -249,13 +284,15 @@ const handleRetry = (req, res) => {
 };
 
 const handleUndo = () => {
-  const undo = undoStack.pop();
-  [draggedCard, originalColumn, targetColumn] = undo;
-  // targetColumn.removeChild(draggedCard);
-  originalColumn.appendChild(draggedCard);
+  if (undoStack.length !== 0) {
+    const undo = undoStack.pop();
+    [draggedCard, originalColumn, targetColumn] = undo;
+    // targetColumn.removeChild(draggedCard);
+    originalColumn.appendChild(draggedCard);
 
-  updateTableState();
-  movableCurrentColumns(COLUMN);
+    updateTableState();
+    movableCurrentColumns(COLUMN);
+  }
 };
 
 updateTableState();

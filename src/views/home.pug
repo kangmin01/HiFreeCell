@@ -5,6 +5,14 @@ block content
     h1=pageTitle
 
     div.table
+        div#time 00:00:00
+        div.button
+            div 
+                button#btn_newGame New game 
+            div 
+                button#btn_retry Retry
+            div 
+                button#btn_undo Undo
         div.cell
             div.freeCell
                 each id in [0,1,2,3]
@@ -17,13 +25,7 @@ block content
                 div(id=`column${idx}` class="column")
                     each card in column
                         +card(card)
-        div 
-            div 
-                button#btn_newGame New game 
-            div 
-                button#btn_retry Retry
-            div 
-                button#btn_undo Undo
+        
     
 
 
