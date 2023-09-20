@@ -25,10 +25,15 @@
     width: 100px;
     height: 100%;
     margin: 0 15px;
+    position: relative;
 
     img {
       width: 100%;
     }
+  }
+
+  .homeCell .home div {
+    position: absolute;
   }
 }
 
