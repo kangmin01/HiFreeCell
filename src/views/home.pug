@@ -18,8 +18,8 @@ block content
                 each id in [0,1,2,3]
                     div(id=`free${id}` class="free")
             div.homeCell
-                each id in [0,1,2,3]
-                    div(id=`home${id}` class="home")
+                each id in ["c0","d1","s2","h3"]
+                    div(id=`${id[0]}home${Number(id[1])}` class="home")
         div.deck
             each column, idx in game.deck
                 div(id=`column${idx}` class="column")

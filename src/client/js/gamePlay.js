@@ -1,12 +1,14 @@
 import "../scss/styles.scss";
 
 let freeCells = document.querySelectorAll(".free");
+let homeCellContainer = document.querySelector(".homeCell");
 let homeCells = document.querySelectorAll(".home");
 let columns = document.querySelectorAll(".column");
 const cards = document.querySelectorAll(".card");
 
 const FREE = [null, null, null, null];
 const HOME = [[], [], [], []];
+const VALID_HOME = ["c1", "d1", "s1", "h1"];
 const COLUMN = [[], [], [], [], [], [], [], []];
 const MOVABLE_COLUMN = [[], [], [], [], [], [], [], []];
 
@@ -53,11 +55,8 @@ const movableCurrentColumns = (col) => {
 let targetImg;
 let draggedCard, draggedCardClass;
 let originalColumn, originalColumnIdx;
-let targetColumn,
-  targetColumnIdx,
-  targetColumnLastCard,
-  targetColumnLastCardIdx;
-let isValid;
+let targetColumn, targetColumnLastCard, targetColumnLastCardIdx;
+let isValid, isvalidCard;
 
 const isValidFn = (target, dragged, cardClass) => {
   if (cardClass === "c") {
@@ -75,7 +74,6 @@ const isValidFn = (target, dragged, cardClass) => {
       ? true
       : false;
   } else if (cardClass === "h") {
-    console.log(target, dragged);
     return target.suit === dragged.suit &&
       Number(target.value) + 1 === Number(dragged.value)
       ? true
@@ -216,31 +214,45 @@ for (let homeCell of homeCells) {
     if (!draggedCard) return;
 
     targetColumn = e.currentTarget;
-    targetColumnIdx = Number(targetColumn.id[4]);
-
-    if (HOME[targetColumnIdx].length === 0) {
-      if (draggedCard.dataset.value === "1") {
-        targetColumn.appendChild(draggedCard);
-        HOME[targetColumnIdx].push(draggedCard.dataset);
-      }
-    } else {
-      targetColumnLastCardIdx = HOME[targetColumnIdx].length;
-      targetColumnLastCard = HOME[targetColumnIdx][targetColumnLastCardIdx - 1];
-
-      isValid = isValidFn(targetColumnLastCard, draggedCard.dataset, "h");
-      if (isValid) {
-        targetColumn.appendChild(draggedCard);
-        HOME[targetColumnIdx].push(draggedCard.dataset);
-      }
-    }
-
-    undoStack.push([draggedCard, originalColumn, targetColumn]);
-
-    draggedCard = null;
-    updateTableState();
-    movableCurrentColumns(COLUMN);
   });
 }
+
+let targetHome, targetHomeIdx;
+
+homeCellContainer.addEventListener("dragover", (e) => {
+  e.preventDefault();
+});
+
+homeCellContainer.addEventListener("drop", (e) => {
+  e.preventDefault();
+
+  isvalidCard = draggedCard.dataset.suit[0] + draggedCard.dataset.value;
+  targetHomeIdx = VALID_HOME.indexOf(isvalidCard);
+
+  if (targetHomeIdx > -1) {
+    targetHome = document.getElementById(
+      draggedCard.dataset.suit[0] + "home" + targetHomeIdx
+    );
+    targetHome.appendChild(draggedCard);
+    HOME[targetHomeIdx].push(draggedCard.dataset);
+
+    updateTableState();
+
+    HOME.forEach((home, idx) => {
+      const len = home.length - 1;
+      if (home.length !== 0) {
+        VALID_HOME[idx] = `${home[len].suit[0]}${Number(home[len].value) + 1}`;
+      }
+    });
+
+    undoStack.push([draggedCard, originalColumn, targetHome]);
+
+    updateTableState();
+    movableCurrentColumns(COLUMN);
+  }
+
+  draggedCard = null;
+});
 
 let startTime;
 let timerStarted = false;
@@ -289,6 +301,14 @@ const handleUndo = () => {
     [draggedCard, originalColumn, targetColumn] = undo;
     // targetColumn.removeChild(draggedCard);
     originalColumn.appendChild(draggedCard);
+
+    if (targetColumn.classList.contains("home")) {
+      const homeIdx = Number(targetColumn.id[5]);
+      const targetInfo =
+        draggedCard.dataset.suit[0] + Number(draggedCard.dataset.value);
+      VALID_HOME[homeIdx] = targetInfo;
+      HOME[homeIdx].pop();
+    }
 
     updateTableState();
     movableCurrentColumns(COLUMN);
