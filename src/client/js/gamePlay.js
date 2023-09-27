@@ -51,12 +51,30 @@ const movableCurrentColumns = (col) => {
   });
 };
 
+const checkResult = () => {
+  if (isSuccess(VALID_HOME)) {
+    handleSuccess();
+  }
+
+  isfreeCellFull =
+    FREE.every((elem) => elem !== null) &&
+    COLUMN.every((elem) => elem.length !== 0);
+
+  if (isfreeCellFull) {
+    if (isFailure(MOVABLE_COLUMN, FREE, VALID_HOME)) {
+      handleFailure();
+    }
+  }
+};
+
 // drag ui
 let targetImg;
 let draggedCard, draggedCardClass;
 let originalColumn, originalColumnIdx;
 let targetColumn, targetColumnLastCard, targetColumnLastCardIdx;
 let isValid, isvalidCard;
+let targetHome, targetHomeIdx;
+let isfreeCellFull;
 
 const isValidFn = (target, dragged, cardClass) => {
   if (cardClass === "c") {
@@ -148,6 +166,7 @@ for (let column of columns) {
     draggedCard = null;
     updateTableState();
     movableCurrentColumns(COLUMN);
+    checkResult();
   });
 }
 
@@ -200,6 +219,7 @@ for (let freeCell of freeCells) {
     draggedCard = null;
     updateTableState();
     movableCurrentColumns(COLUMN);
+    checkResult();
   });
 }
 
@@ -216,8 +236,6 @@ for (let homeCell of homeCells) {
     targetColumn = e.currentTarget;
   });
 }
-
-let targetHome, targetHomeIdx;
 
 homeCellContainer.addEventListener("dragover", (e) => {
   e.preventDefault();
@@ -249,10 +267,81 @@ homeCellContainer.addEventListener("drop", (e) => {
 
     updateTableState();
     movableCurrentColumns(COLUMN);
+    checkResult();
   }
 
   draggedCard = null;
 });
+
+const isSuccess = (arr) => {
+  return arr.every((elem) => elem.endsWith("14"));
+};
+
+const isFailure = (column, free, home) => {
+  for (let i = 0; i < column.length; i++) {
+    const elem1 = column[i][0];
+    if (!elem1) continue;
+
+    for (let j = 0; j < column.length; j++) {
+      const elem2 = column[j][0];
+      if (!elem2) continue;
+      if (
+        elem1.color !== elem2.color &&
+        Math.abs(elem1.value - elem2.value) === 1
+      ) {
+        return false;
+      }
+    }
+  }
+
+  for (let i = 0; i < column.length; i++) {
+    const elem1 = column[i][0];
+    if (!elem1) continue;
+
+    for (let j = 0; j < home.length; j++) {
+      const elem2 = home[j];
+      if (elem2 === elem1.suit[0] + elem1.value) {
+        return false;
+      }
+    }
+  }
+
+  for (let i = 0; i < column.length; i++) {
+    const elem1 = column[i][0];
+    if (!elem1) continue;
+
+    for (let j = 0; j < free.length; j++) {
+      const elem2 = free[j];
+      if (elem1.color !== elem2.color && elem1.value - elem2.value === 1) {
+        return false;
+      }
+    }
+  }
+
+  for (let i = 0; i < free.length; i++) {
+    const elem1 = free[i];
+    for (let j = 0; j < home.length; j++) {
+      const elem2 = home[j];
+      if (elem2 === elem1.suit[0] + elem1.value) {
+        return false;
+      }
+    }
+  }
+
+  return true;
+};
+
+const handleSuccess = () => {
+  setTimeout(() => {
+    alert("성공");
+  }, 1000);
+};
+
+const handleFailure = () => {
+  setTimeout(() => {
+    alert("더 이상 움직일 수 있는 카드가 없습니다.");
+  }, 1000);
+};
 
 let startTime;
 let timerStarted = false;
