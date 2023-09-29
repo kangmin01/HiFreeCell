@@ -128,6 +128,72 @@ export const googleOauthCallback = async (req, res) => {
   }
 };
 
+export const kakaoOauth = (req, res) => {
+  const baseUri = "https://kauth.kakao.com/oauth/authorize";
+  const config = {
+    client_id: process.env.KA_CLIENT,
+    redirect_uri: "http://localhost:4000/users/oauth/kakao/callback",
+    response_type: "code",
+  };
+  const params = new URLSearchParams(config).toString();
+  const finalUri = `${baseUri}?${params}`;
+  return res.redirect(finalUri);
+};
+
+export const kakaoOauthCallback = async (req, res) => {
+  const baseUri = "	https://kauth.kakao.com/oauth/token";
+  const config = {
+    grant_type: "authorization_code",
+    client_id: process.env.KA_CLIENT,
+    redirect_uri: "http://localhost:4000/users/oauth/kakao/callback",
+    code: req.query.code,
+  };
+  const params = new URLSearchParams(config).toString();
+  const finalUri = `${baseUri}?${params}`;
+  const tokenRequest = await (
+    await fetch(finalUri, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
+      },
+    })
+  ).json();
+
+  if ("access_token" in tokenRequest) {
+    const { access_token } = tokenRequest;
+    const apiUri = "https://kapi.kakao.com/v2/user/me";
+    const userData = await (
+      await fetch(apiUri, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
+        },
+      })
+    ).json();
+
+    if (
+      !userData.kakao_account.is_email_valid ||
+      !userData.kakao_account.is_email_verified
+    ) {
+      return res.redirect("/login");
+    }
+
+    let user = await User.findOne({ email: userData.kakao_account.email });
+    if (!user) {
+      user = await User.create({
+        name: userData.kakao_account.profile.nickname,
+        username: userData.kakao_account.profile.nickname,
+        email: userData.kakao_account.email,
+      });
+    }
+    req.session.loggedIn = true;
+    req.session.user = user;
+    return res.redirect("/");
+  } else {
+    return res.redirect("/login");
+  }
+};
+
 export const logout = (req, res) => {
   req.session.destroy();
   return res.redirect("/");
