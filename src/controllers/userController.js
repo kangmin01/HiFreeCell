@@ -71,6 +71,63 @@ export const postLogin = async (req, res) => {
   return res.redirect("/");
 };
 
+export const googleOauth = (req, res) => {
+  const baseUri = "https://accounts.google.com/o/oauth2/v2/auth";
+  const config = {
+    client_id: process.env.GG_CLIENT,
+    response_type: "code",
+    redirect_uri: "http://localhost:4000/users/oauth/google/callback",
+    scope: "email profile",
+  };
+  const params = new URLSearchParams(config).toString();
+  const finalUri = `${baseUri}?${params}`;
+  return res.redirect(finalUri);
+};
+
+export const googleOauthCallback = async (req, res) => {
+  const baseUri = "https://oauth2.googleapis.com/token";
+  const config = {
+    code: req.query.code,
+    client_id: process.env.GG_CLIENT,
+    client_secret: process.env.GG_SECRET,
+    redirect_uri: "http://localhost:4000/users/oauth/google/callback",
+    grant_type: "authorization_code",
+  };
+  const params = new URLSearchParams(config).toString();
+  const finalUri = `${baseUri}?${params}`;
+  const tokenRequest = await (
+    await fetch(finalUri, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    })
+  ).json();
+
+  if ("access_token" in tokenRequest) {
+    const { access_token } = tokenRequest;
+    const apiUri = `https://www.googleapis.com/oauth2/v2/userinfo?access_token=${access_token}`;
+    const userData = await (
+      await fetch(apiUri, {
+        headers: { authorization: `Bearer ${access_token}` },
+      })
+    ).json();
+    const { email, name } = userData;
+    let user = await User.findOne({ email: userData.email });
+    if (!user) {
+      user = await User.create({
+        name,
+        username: email.split("@")[0],
+        email,
+      });
+    }
+
+    req.session.loggedIn = true;
+    req.session.user = user;
+    return res.redirect("/");
+  } else {
+    return res.redirect("/login");
+  }
+};
+
 export const logout = (req, res) => {
   req.session.destroy();
   return res.redirect("/");
