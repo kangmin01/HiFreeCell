@@ -1,20 +1,18 @@
-header 
+header
+    a(href="/") HiFreecell
     nav 
         ul  
             li 
-                a(href="/") 🏠 Home
-            li 
-                a(href="/games") ♣️ Game
+                a(href="/games") Game
             
             if loggedIn
                 li 
-                    a(href="/users/logout") 🚪 Logout
+                    a(href="/users/logout") Logout
                 li 
-                    a(href=`/users/${loggedInUser._id}`) 👤 My page
+                    a(href=`/users/${loggedInUser._id}`)
+                        i.fa-solid.fa-user
             else 
                 li 
-                    a(href="/join") 🤝 Join
+                    a(href="/join") Join
                 li 
-                    a(href="/login") 🚪 Login
-            if loggedIn
-                h2 #{loggedInUser.username} 🖐️
+                    a(href="/login") Login

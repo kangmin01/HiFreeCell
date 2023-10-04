@@ -1,5 +1,3 @@
-import "../scss/styles.scss";
-
 let freeCells = document.querySelectorAll(".free");
 let homeCellContainer = document.querySelector(".homeCell");
 let homeCells = document.querySelectorAll(".home");

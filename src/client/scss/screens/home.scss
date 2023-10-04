@@ -1,3 +1,45 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+
+  main {
+    flex: 1;
+    background-color: #e29c5f;
+    padding: 50px 0;
+
+    .main_home {
+      height: 60%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .btn_play_freecell {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    font-size: 130px;
+    color: white;
+    text-decoration: none;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    background-color: inherit;
+    padding: 20px 40px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #c78a54;
+    }
+  }
+}
+
 .table {
   background-color: lightseagreen;
 

@@ -1,0 +1,27 @@
+header {
+  background-color: #e29c5f;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  text-transform: uppercase;
+  font-size: 20px;
+  color: white;
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  ul {
+    display: flex;
+
+    li {
+      margin-left: 30px;
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+    }
+  }
+}

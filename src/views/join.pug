@@ -1,14 +1,19 @@
 extends layout/layout
 
 block content
-    h1=pageTitle
-
-    if errorMessage
-        h3=errorMessage
-    form(method="post")
-        input(placeholder="Name", name="name", type="text", required)
-        input(placeholder="User name", name="username", type="text", required)
-        input(placeholder="Email", name="email", type="email", required)
-        input(placeholder="Password", name="password", type="password", required)
-        input(placeholder="Confirm Password", name="password2", type="password", required)
-        input(type="submit", value="Join")
+    div.main_login
+        if errorMessage
+            h3=errorMessage
+        form.form_login(method="post")
+            h1 Join
+            div.social-container
+                a(href="/users/oauth/google")
+                    i.fa-brands.fa-google-plus-g
+                a(href="/users/oauth/kakao")
+                    i.fa-brands.fa-kaggle
+            input(placeholder="Name", name="name", type="text", required)
+            input(placeholder="User name", name="username", type="text", required)
+            input(placeholder="Email", name="email", type="email", required)
+            input(placeholder="Password", name="password", type="password", required)
+            input(placeholder="Confirm Password", name="password2", type="password", required)
+            input(type="submit", value="Join")

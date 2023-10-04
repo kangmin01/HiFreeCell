@@ -1,0 +1,67 @@
+// Login & Join Page
+.main_login {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .form_login {
+    background-color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+    padding: 80px;
+
+    h1 {
+      font-size: 40px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .social-container {
+      margin: 30px 0;
+      display: flex;
+      justify-content: center;
+
+      a {
+        width: 40px;
+        height: 40px;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        margin: 0 16px;
+        color: rgba(0, 0, 0, 0.8);
+
+        i {
+          font-size: 20px;
+        }
+      }
+    }
+
+    input:not(:last-of-type) {
+      background-color: rgba(0, 0, 0, 0.1);
+      margin-bottom: 24px;
+      padding: 14px;
+      border: none;
+      width: 280px;
+    }
+
+    input:last-of-type {
+      background-color: rgb(230, 118, 44);
+      border: none;
+      border-radius: 20px;
+      padding: 12px;
+      width: 100px;
+      margin: 0 auto;
+      margin-top: 20px;
+
+      &:hover {
+        cursor: pointer;
+        background-color: rgb(212, 110, 42);
+      }
+    }
+  }
+}
