@@ -9,6 +9,8 @@ header
                 li 
                     a(href="/users/logout") Logout
                 li 
+                    a(href="/users/edit") Edit profile
+                li 
                     a(href=`/users/${loggedInUser._id}`)
                         if loggedInUser.socialOnly
                             img(src=loggedInUser.avatar)

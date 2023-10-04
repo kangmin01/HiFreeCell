@@ -202,6 +202,51 @@ export const kakaoOauthCallback = async (req, res) => {
   }
 };
 
+export const getEdit = (req, res) => {
+  return res.render("users/edit-profile", { pageTitle: "Edit Profile" });
+};
+
+export const postEdit = async (req, res) => {
+  const pageTitle = "Edit Profile";
+  const {
+    session: {
+      user: { _id, avatar },
+    },
+    body: { name, username, email },
+    file,
+  } = req;
+
+  const existsUsername = await User.findOne({ _id: { $ne: _id }, username });
+  const existsEmail = await User.findOne({ _id: { $ne: _id }, email });
+
+  if (existsUsername || existsEmail) {
+    return res.status(400).render("edit-profile", {
+      pageTitle,
+      errorMessage: "This username/email is already taken.",
+    });
+  }
+
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      _id,
+      {
+        avatar: file ? file.path : avatar,
+        name,
+        username,
+        email,
+      },
+      { new: true }
+    );
+    req.session.user = updatedUser;
+    return res.redirect("/users/edit");
+  } catch (error) {
+    return res.status(404).render("users/edit-profile", {
+      pageTitle,
+      errorMessage: error._message,
+    });
+  }
+};
+
 export const logout = (req, res) => {
   req.session.destroy();
   return res.redirect("/");

@@ -1,7 +1,9 @@
 import express from "express";
-import { userOnlyMiddleware } from "../middlewares";
+import { userOnlyMiddleware, avatarUpload } from "../middlewares";
 import {
   logout,
+  getEdit,
+  postEdit,
   userInfo,
   googleOauth,
   googleOauthCallback,
@@ -12,6 +14,10 @@ import {
 const userRouter = express.Router();
 
 userRouter.get("/logout", userOnlyMiddleware, logout);
+userRouter
+  .route("/edit")
+  .get(userOnlyMiddleware, getEdit)
+  .post(avatarUpload.single("avatar"), postEdit);
 userRouter.get("/oauth/google", googleOauth);
 userRouter.get("/oauth/google/callback", googleOauthCallback);
 userRouter.get("/oauth/kakao", kakaoOauth);

@@ -11,15 +11,16 @@
     display: flex;
     flex-direction: column;
     padding: 80px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
 
     h1 {
       font-size: 40px;
       font-weight: 600;
       text-align: center;
+      margin-bottom: 30px;
     }
 
     .social-container {
-      margin: 30px 0;
       display: flex;
       justify-content: center;
 
@@ -41,26 +42,55 @@
       }
     }
 
-    input:not(:last-of-type) {
+    input {
       background-color: rgba(0, 0, 0, 0.1);
       margin-bottom: 24px;
       padding: 14px;
       border: none;
-      width: 280px;
+      width: 260px;
+
+      &:first-of-type {
+        margin-top: 30px;
+      }
     }
 
-    input:last-of-type {
+    label {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-align: center;
+
+      input {
+        margin-left: 20px;
+      }
+
+      &:not(:first-child) input {
+        margin-top: 16px;
+      }
+    }
+
+    .btn_submit {
       background-color: rgb(230, 118, 44);
+      width: 200px;
       border: none;
-      border-radius: 20px;
-      padding: 12px;
-      width: 100px;
+      border-radius: 30px;
+      padding: 16px;
       margin: 0 auto;
       margin-top: 20px;
 
       &:hover {
         cursor: pointer;
         background-color: rgb(212, 110, 42);
+      }
+    }
+
+    .edit-profile__password {
+      margin-top: 20px;
+      text-align: center;
+      .btn_change-password {
+        text-decoration: none;
+        color: rgb(230, 118, 44);
       }
     }
   }

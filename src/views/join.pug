@@ -5,17 +5,17 @@ block content
         if errorMessage
             h3=errorMessage
         form.form_login(method="post", enctype="multipart/form-data")
-            h1 Join
+            h1=pageTitle
             div.social-container
                 a(href="/users/oauth/google")
                     i.fa-brands.fa-google-plus-g
                 a(href="/users/oauth/kakao")
                     i.fa-brands.fa-kaggle
-            label(for="avatar") Avatar 
-            input(type="file", id="avatar", name="avatar", accept="image/*")
+            label(for="avatar")
+            input(placeholder="Avatar", type="file", id="avatar", name="avatar", accept="image/*")
             input(placeholder="Name", name="name", type="text", required)
             input(placeholder="User name", name="username", type="text", required)
             input(placeholder="Email", name="email", type="email", required)
             input(placeholder="Password", name="password", type="password", required)
             input(placeholder="Confirm Password", name="password2", type="password", required)
-            input(type="submit", value="Join")
+            input.btn_submit(type="submit", value="Join")

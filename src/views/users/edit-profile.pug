@@ -1,0 +1,18 @@
+extends ../layout/layout
+
+block content 
+    div.main_login
+        form.form_login(method="POST", enctype="multipart/form-data")
+            h1=pageTitle
+            label Avatar
+                input(type="file", name="avatar", accept="image/*")
+            label Name
+                input(placeholder="Name", name="name", type="text", required, value=loggedInUser.name)
+            label Username
+                input(placeholder="Username", name="username", type="text", required, value=loggedInUser.username)
+            label Email
+                input(placeholder="Email", name="email", type="email", required, value=loggedInUser.email)
+            input.btn_submit(type="submit" value="Update Profile")
+            if !loggedInUser.socialOnly
+                div.edit-profile__password
+                    a.btn_change-password(href="/users/change-password") Change Password &rarr;
