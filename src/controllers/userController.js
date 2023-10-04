@@ -7,7 +7,10 @@ export const getJoin = (req, res) => {
 };
 
 export const postJoin = async (req, res) => {
-  const { name, username, email, password, password2 } = req.body;
+  const {
+    body: { name, username, email, password, password2 },
+    file,
+  } = req;
   const pageTitle = "Join";
 
   if (!password || password !== password2) {
@@ -30,6 +33,7 @@ export const postJoin = async (req, res) => {
       name,
       username,
       email,
+      avatar: file.path,
       password,
     });
     return res.redirect("/login");
@@ -110,13 +114,15 @@ export const googleOauthCallback = async (req, res) => {
         headers: { authorization: `Bearer ${access_token}` },
       })
     ).json();
-    const { email, name } = userData;
+    const { email, name, picture } = userData;
     let user = await User.findOne({ email: userData.email });
     if (!user) {
       user = await User.create({
         name,
         username: email.split("@")[0],
         email,
+        avatar: picture,
+        socialOnly: true,
       });
     }
 
@@ -184,6 +190,8 @@ export const kakaoOauthCallback = async (req, res) => {
         name: userData.kakao_account.profile.nickname,
         username: userData.kakao_account.profile.nickname,
         email: userData.kakao_account.email,
+        avatar: userData.kakao_account.profile.thumbnail_image_url,
+        socialOnly: true,
       });
     }
     req.session.loggedIn = true;
@@ -200,9 +208,18 @@ export const logout = (req, res) => {
 };
 
 export const userInfo = async (req, res) => {
-  const { id } = req.params;
+  const {
+    params: { id },
+    session: { user },
+  } = req;
 
-  const user = await User.findById(id);
+  const isOwner = id === user._id ? true : false;
 
-  return res.render("users/userInfo", { pageTitle: "User Info", user });
+  const userInfo = await User.findById(id);
+
+  return res.render("users/userInfo", {
+    pageTitle: "User Info",
+    userInfo,
+    isOwner,
+  });
 };
