@@ -10,7 +10,10 @@ header
                     a(href="/users/logout") Logout
                 li 
                     a(href=`/users/${loggedInUser._id}`)
-                        i.fa-solid.fa-user
+                        if loggedInUser.socialOnly
+                            img(src=loggedInUser.avatar)
+                        else
+                            img(src="/" + loggedInUser.avatar)
             else 
                 li 
                     a(href="/join") Join

@@ -1,7 +1,39 @@
 extends ../layout/layout
 
 block content
-    h1=pageTitle
-
-    h3 username : #{user.username} 
-    h3 email : #{user.email}
+    div.main_userInfo
+        div.userInfo_container
+            div.profile_container
+                div.box_avatar  
+                    if userInfo.socialOnly
+                        img(src=userInfo.avatar)
+                    else
+                        img(src="/" + userInfo.avatar)
+                h1=userInfo.username
+                
+            div.stats_container
+                div.box_winRate
+                    h1 Win Rate     
+                    h2 80%
+                div.box_summary
+                    table.box_summary_row1
+                        thead
+                            tr
+                                th Total
+                                th Won
+                                th Lost
+                        tbody
+                            tr 
+                                td 100
+                                td 80
+                                td 20  
+  
+                    table.box_summary_row2
+                        thead
+                            tr
+                                th Shortest
+                                th Average
+                        tbody
+                            tr 
+                                td 00:50
+                                td 02:50

@@ -3,6 +3,7 @@ header {
   padding: 20px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   text-transform: uppercase;
   font-size: 20px;
   color: white;
@@ -17,10 +18,20 @@ header {
 
     li {
       margin-left: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
       a {
         text-decoration: none;
         color: inherit;
+
+        img {
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          border: 1px solid white;
+        }
       }
     }
   }
