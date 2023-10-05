@@ -1,4 +1,3 @@
-import { render } from "pug";
 import User from "../models/User";
 import bcrypt from "bcrypt";
 
@@ -239,6 +238,55 @@ export const postEdit = async (req, res) => {
     );
     req.session.user = updatedUser;
     return res.redirect("/users/edit");
+  } catch (error) {
+    return res.status(404).render("users/edit-profile", {
+      pageTitle,
+      errorMessage: error._message,
+    });
+  }
+};
+
+export const getChangePassword = (req, res) => {
+  return res.render("users/change-password", { pageTitle: "Change Password" });
+};
+
+export const postChangePassword = async (req, res) => {
+  const pageTitle = "Change Password";
+  const {
+    session: {
+      user: { _id },
+    },
+    body: { oldPassword, newPassword, newPasswordConfirmation },
+  } = req;
+
+  try {
+    const user = await User.findById(_id);
+    const ok = await bcrypt.compare(oldPassword, user.password);
+
+    if (!ok) {
+      return res.status(400).render("users/change-password", {
+        pageTitle,
+        errorMessage: "The current password is incorrect.",
+      });
+    }
+
+    if (newPassword !== newPasswordConfirmation) {
+      return res.status(400).render("users/change-password", {
+        pageTitle,
+        errorMessage: "The password does not match the cofirmation.",
+      });
+    }
+
+    if (oldPassword === newPassword) {
+      return res.status(400).render("users/change-password", {
+        pageTitle,
+        errorMessage: "The old password equals new password",
+      });
+    }
+    user.password = newPassword;
+    await user.save();
+    req.session.destroy();
+    return res.redirect("/login");
   } catch (error) {
     return res.status(404).render("users/edit-profile", {
       pageTitle,

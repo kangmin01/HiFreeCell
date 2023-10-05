@@ -1,9 +1,15 @@
 import express from "express";
-import { userOnlyMiddleware, avatarUpload } from "../middlewares";
+import {
+  userOnlyMiddleware,
+  publicOnlyMiddleware,
+  avatarUpload,
+} from "../middlewares";
 import {
   logout,
   getEdit,
   postEdit,
+  getChangePassword,
+  postChangePassword,
   userInfo,
   googleOauth,
   googleOauthCallback,
@@ -16,12 +22,26 @@ const userRouter = express.Router();
 userRouter.get("/logout", userOnlyMiddleware, logout);
 userRouter
   .route("/edit")
-  .get(userOnlyMiddleware, getEdit)
+  .all(userOnlyMiddleware)
+  .get(getEdit)
   .post(avatarUpload.single("avatar"), postEdit);
-userRouter.get("/oauth/google", googleOauth);
-userRouter.get("/oauth/google/callback", googleOauthCallback);
-userRouter.get("/oauth/kakao", kakaoOauth);
-userRouter.get("/oauth/kakao/callback", kakaoOauthCallback);
+userRouter
+  .route("/change-password")
+  .all(userOnlyMiddleware)
+  .get(getChangePassword)
+  .post(postChangePassword);
+userRouter.get("/oauth/google", publicOnlyMiddleware, googleOauth);
+userRouter.get(
+  "/oauth/google/callback",
+  publicOnlyMiddleware,
+  googleOauthCallback
+);
+userRouter.get("/oauth/kakao", publicOnlyMiddleware, kakaoOauth);
+userRouter.get(
+  "/oauth/kakao/callback",
+  publicOnlyMiddleware,
+  kakaoOauthCallback
+);
 userRouter.get("/:id", userInfo);
 
 export default userRouter;
