@@ -8,6 +8,11 @@ const userSchema = new mongoose.Schema({
   avatar: { type: String, required: true },
   socialOnly: { type: Boolean, default: false },
   password: { type: String },
+  playedGame: [{ type: mongoose.Schema.Types.ObjectId, ref: "Game" }],
+  wonGame: [{ type: mongoose.Schema.Types.ObjectId, ref: "Game" }],
+  lostGame: [{ type: mongoose.Schema.Types.ObjectId, ref: "Game" }],
+  shortestTime: { type: Number },
+  averageTime: { type: Number },
 });
 
 userSchema.pre("save", async function () {

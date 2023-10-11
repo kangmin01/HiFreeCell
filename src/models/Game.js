@@ -3,13 +3,10 @@ import mongoose from "mongoose";
 const gameSchema = new mongoose.Schema({
   title: { type: Number, required: true },
   deck: [],
-  ResolvedUser: [
-    { type: mongoose.Schema.Types.ObjectId, ref: "User", default: null },
-  ],
-  unresolvedUser: [
-    { type: mongoose.Schema.Types.ObjectId, ref: "User", default: null },
-  ],
-  winRate: { type: Number, required: true, default: null },
+  successfulUser: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  failedUser: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  winRate: { type: Number },
+  playTime: [{ type: Number }],
 });
 
 const Game = mongoose.model("Game", gameSchema);
