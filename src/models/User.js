@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
   avatar: { type: String, required: true },
   socialOnly: { type: Boolean, default: false },
   password: { type: String },
+  role: { type: String, required: true, default: "user" },
   playedGame: [{ type: mongoose.Schema.Types.ObjectId, ref: "Game" }],
   wonGame: [{ type: mongoose.Schema.Types.ObjectId, ref: "Game" }],
   lostGame: [{ type: mongoose.Schema.Types.ObjectId, ref: "Game" }],

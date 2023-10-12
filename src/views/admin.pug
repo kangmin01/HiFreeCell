@@ -1,0 +1,24 @@
+extends layout/layout
+include mixins/game
+
+block content
+    div 
+        div.newGame
+            form(method="post")
+                input(placeholder=1, name="num", type="number", required)
+                input(type="submit", value="Create Game")
+        div.searchGame
+            input(placeholder="game number", name="title", type="number", required)
+        div.gameTable
+            table 
+                thead 
+                    tr 
+                        th 
+                            input(type="checkbox")
+                        th title 
+                        th winRate 
+                        th average time
+                tbody
+                    each game in games
+                        +game(game)
+

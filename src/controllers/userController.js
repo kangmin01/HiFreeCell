@@ -1,3 +1,4 @@
+import Game from "../models/Game";
 import User from "../models/User";
 import bcrypt from "bcrypt";
 
@@ -28,6 +29,17 @@ export const postJoin = async (req, res) => {
   }
 
   try {
+    if (username === "admin") {
+      await User.create({
+        name,
+        username,
+        email,
+        avatar: file.path,
+        password,
+        role: "admin",
+      });
+      return res.redirect("/login");
+    }
     await User.create({
       name,
       username,
@@ -69,9 +81,14 @@ export const postLogin = async (req, res) => {
   }
 
   req.session.loggedIn = true;
-  req.session.user = user;
 
-  return res.redirect("/");
+  if (username === "admin") {
+    req.session.admin = true;
+    return res.redirect("/admin");
+  } else {
+    req.session.user = user;
+    return res.redirect("/");
+  }
 };
 
 export const googleOauth = (req, res) => {

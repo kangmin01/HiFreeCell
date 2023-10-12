@@ -1,6 +1,10 @@
 import express from "express";
 import { publicOnlyMiddleware, avatarUpload } from "../middlewares";
-import { home } from "../controllers/gameController";
+import {
+  home,
+  getCreateGame,
+  postCreateGame,
+} from "../controllers/gameController";
 import {
   getJoin,
   postJoin,
@@ -21,5 +25,6 @@ rootRouter
   .all(publicOnlyMiddleware)
   .get(getLogin)
   .post(postLogin);
+rootRouter.route("/admin").get(getCreateGame).post(postCreateGame);
 
 export default rootRouter;

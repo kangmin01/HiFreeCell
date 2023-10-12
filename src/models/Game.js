@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
 const gameSchema = new mongoose.Schema({
-  title: { type: Number, required: true },
-  deck: [],
+  number: { type: Number, required: true },
+  deck: { type: Object },
   successfulUser: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   failedUser: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   winRate: { type: Number },
