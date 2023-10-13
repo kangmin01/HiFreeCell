@@ -23,6 +23,14 @@ export const publicOnlyMiddleware = (req, res, next) => {
   }
 };
 
+export const adminOnlyMiddleware = (req, res, next) => {
+  if (!req.session.admin) {
+    return res.redirect("/");
+  } else {
+    next();
+  }
+};
+
 export const avatarUpload = multer({
   dest: "uploads/",
 });

@@ -2,23 +2,24 @@ extends layout/layout
 include mixins/game
 
 block content
-    div 
-        div.newGame
+    div.main_admin
+        div.container_newGame
             form(method="post")
-                input(placeholder=1, name="num", type="number", required)
-                input(type="submit", value="Create Game")
-        div.searchGame
-            input(placeholder="game number", name="title", type="number", required)
-        div.gameTable
+                input.input_num(placeholder=1, name="num", type="number", required)
+                input.input_submit(type="submit", value="Create Game")
+        div.container_searchGame
+            input(placeholder="Search game", name="title", type="number", required)
+            i.fa-solid.fa-magnifying-glass
+        div.container_gameTable
             table 
-                thead 
-                    tr 
+                thead.row_head 
+                    tr
                         th 
                             input(type="checkbox")
-                        th title 
+                        th Number
+                        th Challenge
                         th winRate 
                         th average time
                 tbody
                     each game in games
                         +game(game)
-

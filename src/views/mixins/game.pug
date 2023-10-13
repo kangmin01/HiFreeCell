@@ -2,6 +2,7 @@ mixin game(game)
     tr 
         td
             input(type="checkbox")
-        td=game.number
-        td=game.winRate
-        td=game.playTime 
+        td.game_number=game.number
+        td.game_played 24
+        td.game_winRate=game.winRate
+        td.game_averageTime=game.playTime 

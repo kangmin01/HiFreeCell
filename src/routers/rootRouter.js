@@ -1,5 +1,9 @@
 import express from "express";
-import { publicOnlyMiddleware, avatarUpload } from "../middlewares";
+import {
+  publicOnlyMiddleware,
+  adminOnlyMiddleware,
+  avatarUpload,
+} from "../middlewares";
 import {
   home,
   getCreateGame,
@@ -25,6 +29,10 @@ rootRouter
   .all(publicOnlyMiddleware)
   .get(getLogin)
   .post(postLogin);
-rootRouter.route("/admin").get(getCreateGame).post(postCreateGame);
+rootRouter
+  .route("/admin")
+  .all(adminOnlyMiddleware)
+  .get(getCreateGame)
+  .post(postCreateGame);
 
 export default rootRouter;
