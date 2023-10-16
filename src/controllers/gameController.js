@@ -4,8 +4,10 @@ export const home = (req, res) => {
   return res.render("home", { pageTitle: "Home" });
 };
 
-export const games = (req, res) => {
-  return res.render("games/games", { pageTitle: "Games" });
+export const games = async (req, res) => {
+  const games = await Game.find({});
+
+  return res.render("games/games", { pageTitle: "Games", games });
 };
 
 export const gameInfo = (req, res) => {

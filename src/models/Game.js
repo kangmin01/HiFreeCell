@@ -5,7 +5,7 @@ const gameSchema = new mongoose.Schema({
   deck: { type: Object },
   successfulUser: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   failedUser: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-  winRate: { type: Number },
+  winRate: { type: Number, default: -1 },
   playTime: [{ type: Number }],
 });
 

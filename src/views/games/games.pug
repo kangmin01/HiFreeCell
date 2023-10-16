@@ -1,4 +1,9 @@
 extends ../layout/layout
+include ../mixins/game-user
 
 block content
     h1=pageTitle
+
+    div.user_game_container
+        each game in games
+            +game(game)

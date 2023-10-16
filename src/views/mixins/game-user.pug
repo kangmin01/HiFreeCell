@@ -1,0 +1,9 @@
+mixin game(game)
+    a.user_game_box(href=`/games/${game.number}`)
+        div.user_game_number ##{game.number}
+        if game.winRate === -1
+            div.user_game_winRate -
+        else 
+            div.user_game_winRate #{game.winRate}%
+        div.user_game_state
+            i.fa-regular.fa-circle-check
