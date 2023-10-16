@@ -74,15 +74,17 @@ const makeDeck = () => {
 
 export const postCreateGame = async (req, res) => {
   const { num } = req.body;
-  const deck = makeDeck();
 
   try {
     const games = await Game.find({});
 
-    await Game.create({
-      number: games.length + 1,
-      deck,
-    });
+    for (let i = 1; i <= num; i++) {
+      const deck = makeDeck();
+      await Game.create({
+        number: games.length + i,
+        deck,
+      });
+    }
   } catch (error) {
     return res.status(404).redirect("/admin");
   }
