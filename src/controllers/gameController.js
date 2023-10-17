@@ -10,8 +10,14 @@ export const games = async (req, res) => {
   return res.render("games/games", { pageTitle: "Games", games });
 };
 
-export const gameInfo = (req, res) => {
-  return res.render("games/gameInfo", { pageTitle: "Game Info" });
+export const gameInfo = async (req, res) => {
+  const { id } = req.params;
+  const game = await Game.findOne({ number: id });
+
+  return res.render("games/gameInfo", {
+    pageTitle: `Game #${game.number}`,
+    game,
+  });
 };
 
 export const play = (req, res) => {

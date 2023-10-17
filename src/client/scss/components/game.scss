@@ -1,0 +1,103 @@
+.game_header {
+  background-color: darkgreen;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  font-size: 22px;
+  border-radius: 30px;
+
+  .game_header_child {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.main_game {
+  background-color: green;
+  width: 100%;
+  height: 100vh; // main 높이와 같게 만들기
+  padding-top: 60px;
+}
+
+.table {
+  width: 1300px;
+  margin: auto;
+
+  #time {
+    width: 150px;
+    height: 60px;
+  }
+
+  .box_game_btn {
+    button {
+      width: 100px;
+      height: 40px;
+      margin-right: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+  }
+}
+
+.cell {
+  width: 100%;
+  height: 150px;
+  display: flex;
+  justify-content: space-around;
+  padding-top: 50px;
+
+  .freeCell,
+  .homeCell {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .freeCell .free,
+  .homeCell .home {
+    border: 3px mediumseagreen solid;
+    width: 100px;
+    height: 100%;
+    margin: 0 15px;
+    position: relative;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  .homeCell .home div {
+    position: absolute;
+  }
+}
+
+.deck {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding: 150px 0;
+
+  .column {
+    margin: 0 20px;
+    width: 100px;
+
+    .card {
+      width: 100px;
+      cursor: pointer;
+
+      &:not(:first-child) {
+        margin-top: -100px;
+      }
+
+      img {
+        width: 100%;
+      }
+
+      // 클릭하고 드래그 할 때 그림자 추가
+    }
+  }
+}

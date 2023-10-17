@@ -7,31 +7,5 @@ block content
             span Play 
             span FreeCell &rarr;
 
-
-    //- div.table
-    //-     div#time 00:00:00
-    //-     div.button
-    //-         div 
-    //-             button#btn_newGame New game 
-    //-         div 
-    //-             button#btn_retry Retry
-    //-         div 
-    //-             button#btn_undo Undo
-    //-     div.cell
-    //-         div.freeCell
-    //-             each id in [0,1,2,3]
-    //-                 div(id=`free${id}` class="free")
-    //-         div.homeCell
-    //-             each id in ["c0","d1","s2","h3"]
-    //-                 div(id=`${id[0]}home${Number(id[1])}` class="home")
-    //-     div.deck
-    //-         each column, idx in game.deck
-    //-             div(id=`column${idx}` class="column")
-    //-                 each card in column
-    //-                     +card(card)
-        
-    
-
-
 block scripts
     script(src="/static/js/gamePlay.js")
