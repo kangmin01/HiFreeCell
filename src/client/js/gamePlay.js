@@ -49,20 +49,93 @@ const movableCurrentColumns = (col) => {
   });
 };
 
+// 승패 판단
 const checkResult = () => {
   if (isSuccess(VALID_HOME)) {
     handleSuccess();
-  }
+  } else {
+    isfreeCellFull =
+      FREE.every((elem) => elem !== null) &&
+      COLUMN.every((elem) => elem.length !== 0);
 
-  isfreeCellFull =
-    FREE.every((elem) => elem !== null) &&
-    COLUMN.every((elem) => elem.length !== 0);
-
-  if (isfreeCellFull) {
-    if (isFailure(MOVABLE_COLUMN, FREE, VALID_HOME)) {
-      handleFailure();
+    if (isfreeCellFull) {
+      if (isFailure(MOVABLE_COLUMN, FREE, VALID_HOME)) {
+        handleFailure();
+      }
     }
   }
+};
+
+const isSuccess = (arr) => {
+  return arr.every((elem) => elem.endsWith("14"));
+};
+
+const isFailure = (column, free, home) => {
+  for (let i = 0; i < column.length; i++) {
+    const elem1 = column[i][0];
+    if (!elem1) continue;
+
+    for (let j = 0; j < column.length; j++) {
+      const elem2 = column[j][0];
+      if (!elem2) continue;
+      if (
+        elem1.color !== elem2.color &&
+        Math.abs(elem1.value - elem2.value) === 1
+      ) {
+        return false;
+      }
+    }
+  }
+
+  for (let i = 0; i < column.length; i++) {
+    const elem1 = column[i][0];
+    if (!elem1) continue;
+
+    for (let j = 0; j < home.length; j++) {
+      const elem2 = home[j];
+      if (elem2 === elem1.suit[0] + elem1.value) {
+        return false;
+      }
+    }
+  }
+
+  for (let i = 0; i < column.length; i++) {
+    const elem1 = column[i][0];
+    if (!elem1) continue;
+
+    for (let j = 0; j < free.length; j++) {
+      const elem2 = free[j];
+      if (elem1.color !== elem2.color && elem1.value - elem2.value === 1) {
+        return false;
+      }
+    }
+  }
+
+  for (let i = 0; i < free.length; i++) {
+    const elem1 = free[i];
+    for (let j = 0; j < home.length; j++) {
+      const elem2 = home[j];
+      if (elem2 === elem1.suit[0] + elem1.value) {
+        return false;
+      }
+    }
+  }
+
+  return true;
+};
+
+const handleSuccess = () => {
+  setTimeout(() => {
+    alert("성공");
+    stopTimer();
+  }, 1000);
+};
+
+const handleFailure = () => {
+  setTimeout(() => {
+    alert("더 이상 움직일 수 있는 카드가 없습니다.");
+    stopTimer();
+  }, 1000);
 };
 
 // drag ui
@@ -271,83 +344,24 @@ homeCellContainer.addEventListener("drop", (e) => {
   draggedCard = null;
 });
 
-const isSuccess = (arr) => {
-  return arr.every((elem) => elem.endsWith("14"));
-};
-
-const isFailure = (column, free, home) => {
-  for (let i = 0; i < column.length; i++) {
-    const elem1 = column[i][0];
-    if (!elem1) continue;
-
-    for (let j = 0; j < column.length; j++) {
-      const elem2 = column[j][0];
-      if (!elem2) continue;
-      if (
-        elem1.color !== elem2.color &&
-        Math.abs(elem1.value - elem2.value) === 1
-      ) {
-        return false;
-      }
-    }
-  }
-
-  for (let i = 0; i < column.length; i++) {
-    const elem1 = column[i][0];
-    if (!elem1) continue;
-
-    for (let j = 0; j < home.length; j++) {
-      const elem2 = home[j];
-      if (elem2 === elem1.suit[0] + elem1.value) {
-        return false;
-      }
-    }
-  }
-
-  for (let i = 0; i < column.length; i++) {
-    const elem1 = column[i][0];
-    if (!elem1) continue;
-
-    for (let j = 0; j < free.length; j++) {
-      const elem2 = free[j];
-      if (elem1.color !== elem2.color && elem1.value - elem2.value === 1) {
-        return false;
-      }
-    }
-  }
-
-  for (let i = 0; i < free.length; i++) {
-    const elem1 = free[i];
-    for (let j = 0; j < home.length; j++) {
-      const elem2 = home[j];
-      if (elem2 === elem1.suit[0] + elem1.value) {
-        return false;
-      }
-    }
-  }
-
-  return true;
-};
-
-const handleSuccess = () => {
-  setTimeout(() => {
-    alert("성공");
-  }, 1000);
-};
-
-const handleFailure = () => {
-  setTimeout(() => {
-    alert("더 이상 움직일 수 있는 카드가 없습니다.");
-  }, 1000);
-};
-
+// 시간 기록
 let startTime;
 let timerStarted = false;
+let timerInterval;
 
 const startTimer = () => {
-  timerStarted = true;
-  startTime = new Date().getTime();
-  setInterval(updateTimer, 1000);
+  if (!timerStarted) {
+    timerStarted = true;
+    startTime = new Date().getTime();
+    timerInterval = setInterval(updateTimer, 1000);
+  }
+};
+
+const stopTimer = () => {
+  if (timerStarted) {
+    clearInterval(timerInterval);
+    timerStarted = false;
+  }
 };
 
 const updateTimer = () => {
@@ -366,6 +380,7 @@ const updateTimer = () => {
   time.innerText = formattedTime;
 };
 
+// 컨트롤 버튼
 for (let card of cards) {
   card.addEventListener("mousedown", (e) => {
     if (!timerStarted) {
