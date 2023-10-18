@@ -1,4 +1,5 @@
 import Game from "../models/Game";
+import User from "../models/User";
 
 export const home = (req, res) => {
   return res.render("home", { pageTitle: "Home" });
@@ -10,18 +11,14 @@ export const games = async (req, res) => {
   return res.render("games/games", { pageTitle: "Games", games });
 };
 
-export const gameInfo = async (req, res) => {
+export const playGame = async (req, res) => {
   const { id } = req.params;
   const game = await Game.findOne({ number: id });
 
-  return res.render("games/gameInfo", {
+  return res.render("games/playGame", {
     pageTitle: `Game #${game.number}`,
     game,
   });
-};
-
-export const play = (req, res) => {
-  return res.render("games/play", { pageTitle: "Play Game" });
 };
 
 export const getCreateGame = async (req, res) => {
@@ -88,6 +85,7 @@ export const postCreateGame = async (req, res) => {
 
     for (let i = 1; i <= num; i++) {
       const deck = makeDeck();
+
       await Game.create({
         number: games.length + i,
         deck,
@@ -97,4 +95,51 @@ export const postCreateGame = async (req, res) => {
     return res.status(404).redirect("/admin");
   }
   return res.redirect("/admin");
+};
+
+export const successGame = async (req, res) => {
+  const {
+    session: { user },
+    params: { id },
+    body: { time },
+  } = req;
+
+  try {
+    const [game, player] = await Promise.all([
+      Game.findOne({ number: id }),
+      User.findById(user._id),
+    ]);
+
+    const hasUserPlayedGame = game.successfulUsers.includes(player._id);
+
+    if (hasUserPlayedGame) return res.sendStatus(200);
+
+    game.successfulUsers.push(player._id);
+    if (!game.shortestTime || game.shortestTime > time) {
+      game.shortestTime = time;
+      game.topRanking = [player._id];
+    } else if (game.shortestTime === time) {
+      game.topRanking.push(player._id);
+    }
+    await game.save();
+
+    player.wonGame.push(game._id);
+    player.playTime.push(time);
+    if (!player.shortestTime || player.shortestTime >= time) {
+      player.shortestTime = time;
+    }
+    await player.save();
+
+    const updatedGame = await Game.findById(game._id);
+
+    return res.status(201).json({
+      winRate: updatedGame.winRate,
+      shortestTime: updatedGame.shortestTime,
+    });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ error: "서버 오류 : 데이터베이스에 접근 중 오류 발생" });
+  }
 };

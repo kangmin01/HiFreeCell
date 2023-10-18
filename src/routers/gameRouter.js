@@ -1,10 +1,10 @@
 import express from "express";
-import { games, gameInfo, play } from "../controllers/gameController";
+import { userOnlyMiddleware } from "../middlewares";
+import { games, playGame } from "../controllers/gameController";
 
 const gameRouter = express.Router();
 
 gameRouter.get("/", games);
-gameRouter.get("/:id", gameInfo);
-gameRouter.get("/:id/play", play);
+gameRouter.route("/:id").all(userOnlyMiddleware).get(playGame);
 
 export default gameRouter;

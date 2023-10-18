@@ -1,3 +1,4 @@
+const table = document.querySelector(".table");
 let freeCells = document.querySelectorAll(".free");
 let homeCellContainer = document.querySelector(".homeCell");
 let homeCells = document.querySelectorAll(".home");
@@ -124,19 +125,45 @@ const isFailure = (column, free, home) => {
   return true;
 };
 
-const handleSuccess = () => {
-  setTimeout(() => {
-    alert("성공");
-    stopTimer();
-  }, 1000);
+const handleSuccess = async () => {
+  alert("성공");
+  stopTimer();
+
+  const gameId = table.dataset.id;
+  const time = elapsedTime;
+  const response = await fetch(`/api/game/${gameId}/success`, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify({ time }),
+  });
+  console.log(response);
+
+  if (response.status === 201) {
+    const { winRate, shortestTime } = await response.json();
+    console.log(time, winRate, shortestTime);
+    // 응답을 받으면 모달창으로 창 띄우기
+  } else if (response.status === 500) {
+    const { error } = await response.json();
+    console.log(error);
+  }
 };
 
 const handleFailure = () => {
-  setTimeout(() => {
-    alert("더 이상 움직일 수 있는 카드가 없습니다.");
-    stopTimer();
-  }, 1000);
+  alert("더 이상 움직일 수 있는 카드가 없습니다.");
+  stopTimer();
 };
+
+const success = document.querySelector(".btn_success");
+const fail = document.querySelector(".btn_fail");
+
+success.addEventListener("click", () => {
+  handleSuccess();
+});
+fail.addEventListener("click", () => {
+  handleFailure();
+});
 
 // drag ui
 let targetImg;
@@ -348,6 +375,7 @@ homeCellContainer.addEventListener("drop", (e) => {
 let startTime;
 let timerStarted = false;
 let timerInterval;
+let elapsedTime;
 
 const startTimer = () => {
   if (!timerStarted) {
@@ -368,7 +396,7 @@ const updateTimer = () => {
   if (!timerStarted) return;
 
   const currentTime = new Date().getTime();
-  const elapsedTime = Math.floor((currentTime - startTime) / 1000);
+  elapsedTime = Math.floor((currentTime - startTime) / 1000);
 
   const hours = Math.floor(elapsedTime / 3600);
   const minutes = Math.floor(elapsedTime / 60);
