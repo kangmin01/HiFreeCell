@@ -9,11 +9,10 @@ const userSchema = new mongoose.Schema({
   socialOnly: { type: Boolean, default: false },
   password: { type: String },
   role: { type: String, required: true, default: "user" },
-  playedGame: [{ type: mongoose.Schema.Types.ObjectId, ref: "Game" }],
   wonGame: [{ type: mongoose.Schema.Types.ObjectId, ref: "Game" }],
   lostGame: [{ type: mongoose.Schema.Types.ObjectId, ref: "Game" }],
   shortestTime: { type: Number },
-  averageTime: { type: Number },
+  playTime: [{ type: Number }],
 });
 
 userSchema.pre("save", async function () {
