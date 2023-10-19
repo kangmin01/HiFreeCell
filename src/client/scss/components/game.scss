@@ -70,6 +70,12 @@
     }
   }
 
+  .homeCell .home {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
   .homeCell .home div {
     position: absolute;
   }
