@@ -61,7 +61,7 @@ const checkResult = () => {
 
     if (isfreeCellFull) {
       if (isFailure(MOVABLE_COLUMN, FREE, VALID_HOME)) {
-        handleFailure();
+        endOrUndo();
       }
     }
   }
@@ -143,21 +143,54 @@ const handleSuccess = async () => {
   if (response.status === 201) {
     const { winRate, shortestTime } = await response.json();
     console.log(time, winRate, shortestTime);
-    // 응답을 받으면 모달창으로 창 띄우기
+    // 응답을 받으면 모달창으로 창 띄우기 (새 게임, 홈)
   } else if (response.status === 500) {
     const { error } = await response.json();
     console.log(error);
   }
 };
 
-const handleFailure = () => {
-  alert("더 이상 움직일 수 있는 카드가 없습니다.");
-  stopTimer();
+const endOrUndo = () => {
+  setTimeout(() => {
+    const undo = confirm(
+      "더 이상 움직일 수 있는 카드가 없습니다. 마지막 수를 취소하시겠습니까?"
+    );
+    if (undo) {
+      handleUndo();
+    } else {
+      handleFailure();
+    }
+  }, 100);
 };
 
+const handleFailure = async () => {
+  alert("실패");
+  stopTimer();
+
+  const gameId = table.dataset.id;
+  const time = elapsedTime;
+  const response = await fetch(`/api/game/${gameId}/fail`, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify({ time }),
+  });
+  console.log(response);
+
+  if (response.status === 201) {
+    const { winRate, shortestTime } = await response.json();
+    console.log(time, winRate, shortestTime);
+    // 응답을 받으면 모달창으로 창 띄우기 (새 게임, 홈, 다시 시도)
+  } else if (response.status === 500) {
+    const { error } = await response.json();
+    console.log(error);
+  }
+};
+
+// 테스트용 버튼
 const success = document.querySelector(".btn_success");
 const fail = document.querySelector(".btn_fail");
-
 success.addEventListener("click", () => {
   handleSuccess();
 });

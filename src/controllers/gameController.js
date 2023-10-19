@@ -143,3 +143,40 @@ export const successGame = async (req, res) => {
       .json({ error: "서버 오류 : 데이터베이스에 접근 중 오류 발생" });
   }
 };
+
+export const failGame = async (req, res) => {
+  const {
+    session: { user },
+    params: { id },
+    body: { time },
+  } = req;
+
+  try {
+    const [game, player] = await Promise.all([
+      Game.findOne({ number: id }),
+      User.findById(user._id),
+    ]);
+
+    const hasUserPlayedGame = game.failedUsers.includes(player._id);
+
+    if (hasUserPlayedGame) return res.sendStatus(200);
+
+    game.failedUsers.push(player._id);
+    await game.save();
+
+    player.lostGame.push(game._id);
+    await player.save();
+
+    const updatedGame = await Game.findById(game._id);
+
+    return res.status(201).json({
+      winRate: updatedGame.winRate,
+      shortestTime: updatedGame.shortestTime,
+    });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ error: "서버 오류 : 데이터베이스에 접근 중 오류 발생" });
+  }
+};
