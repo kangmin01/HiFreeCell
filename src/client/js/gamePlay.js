@@ -125,6 +125,9 @@ const isFailure = (column, free, home) => {
   return true;
 };
 
+const modalContainer = document.querySelector(".container_modal");
+const modal = document.querySelector(".modal");
+
 const handleSuccess = async () => {
   alert("성공");
   stopTimer();
@@ -143,11 +146,55 @@ const handleSuccess = async () => {
   if (response.status === 201) {
     const { winRate, shortestTime } = await response.json();
     console.log(time, winRate, shortestTime);
-    // 응답을 받으면 모달창으로 창 띄우기 (새 게임, 홈)
+    successModal(time, winRate, shortestTime);
   } else if (response.status === 500) {
     const { error } = await response.json();
     console.log(error);
   }
+};
+
+const successModal = (time, winRate, shortestTime) => {
+  const title = document.createElement("div");
+  title.classList.add("box_title");
+  title.innerHTML = "축하합니다!";
+  modal.appendChild(title);
+
+  const variables = { time, winRate, shortestTime };
+  const variableNames = Object.keys(variables);
+  const records = document.createElement("div");
+  records.classList.add("box_record");
+  for (let i = 0; i < 3; i++) {
+    const record = document.createElement("div");
+    record.classList.add("record");
+    const d1 = document.createElement("div");
+    d1.innerHTML = variableNames[i];
+    const d2 = document.createElement("div");
+    d2.innerHTML = variables[variableNames[i]];
+    record.appendChild(d1);
+    record.appendChild(d2);
+    records.appendChild(record);
+  }
+  modal.appendChild(records);
+
+  const btnBox = document.createElement("div");
+  btnBox.classList.add("box_btn");
+  const newGameBtn = document.createElement("a");
+  newGameBtn.innerHTML = "New Game";
+  newGameBtn.href = "/games";
+  newGameBtn.addEventListener("click", () => {
+    modalContainer.style.display = "none";
+  });
+  const homeBtn = document.createElement("a");
+  homeBtn.innerHTML = "Home";
+  homeBtn.href = "/";
+  homeBtn.addEventListener("click", () => {
+    modalContainer.style.display = "none";
+  });
+  btnBox.appendChild(newGameBtn);
+  btnBox.appendChild(homeBtn);
+  modal.appendChild(btnBox);
+
+  modalContainer.style.display = "flex";
 };
 
 const endOrUndo = () => {
