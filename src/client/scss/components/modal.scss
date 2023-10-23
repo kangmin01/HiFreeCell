@@ -61,7 +61,7 @@
     a {
       text-decoration: none;
       color: black;
-      font-size: 22px;
+      font-size: 18px;
       padding: 18px 30px;
       background-color: white;
       cursor: pointer;
@@ -73,7 +73,7 @@
       }
     }
 
-    a:first-child {
+    a:not(:last-child) {
       margin-right: 40px;
     }
   }

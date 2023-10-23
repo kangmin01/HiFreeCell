@@ -146,20 +146,20 @@ const handleSuccess = async () => {
   if (response.status === 201) {
     const { winRate, shortestTime } = await response.json();
     console.log(time, winRate, shortestTime);
-    successModal(time, winRate, shortestTime);
+    const variables = { time, winRate, shortestTime };
+    showModal("축하합니다!", variables, true);
   } else if (response.status === 500) {
     const { error } = await response.json();
     console.log(error);
   }
 };
 
-const successModal = (time, winRate, shortestTime) => {
+const showModal = (titleText, variables, isSucceeded) => {
   const title = document.createElement("div");
   title.classList.add("box_title");
-  title.innerHTML = "축하합니다!";
+  title.innerHTML = titleText;
   modal.appendChild(title);
 
-  const variables = { time, winRate, shortestTime };
   const variableNames = Object.keys(variables);
   const records = document.createElement("div");
   records.classList.add("box_record");
@@ -193,6 +193,16 @@ const successModal = (time, winRate, shortestTime) => {
   btnBox.appendChild(newGameBtn);
   btnBox.appendChild(homeBtn);
   modal.appendChild(btnBox);
+  if (!isSucceeded) {
+    const retryBtn = document.createElement("a");
+    retryBtn.innerHTML = "Retry";
+    retryBtn.href = "#";
+    retryBtn.addEventListener("click", () => {
+      modalContainer.style.display = "none";
+      window.location.reload();
+    });
+    btnBox.appendChild(retryBtn);
+  }
 
   modalContainer.style.display = "flex";
 };
@@ -228,7 +238,8 @@ const handleFailure = async () => {
   if (response.status === 201) {
     const { winRate, shortestTime } = await response.json();
     console.log(time, winRate, shortestTime);
-    // 응답을 받으면 모달창으로 창 띄우기 (새 게임, 홈, 다시 시도)
+    const variables = { time, winRate, shortestTime };
+    showModal("게임 종료", variables, false);
   } else if (response.status === 500) {
     const { error } = await response.json();
     console.log(error);
