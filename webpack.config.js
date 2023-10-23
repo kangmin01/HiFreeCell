@@ -7,6 +7,7 @@ module.exports = {
   entry: {
     main: BASE_JS + "/main.js",
     gamePlay: BASE_JS + "/gamePlay.js",
+    home: BASE_JS + "/home.js",
   },
   plugins: [
     new MiniCssExtractPlugin({

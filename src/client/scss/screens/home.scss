@@ -10,29 +10,28 @@ main {
   padding-bottom: 80px;
 
   .main_home {
-    height: 60%;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 50px 0;
   }
 }
 
 .btn_play_freecell {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
+  // -webkit-appearance: none;
+  // -moz-appearance: none;
+  // appearance: none;
 
   font-size: 130px;
   color: white;
+  background-color: green;
   text-decoration: none;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border: 3px solid lightgreen;
   border-radius: 10px;
-  background-color: inherit;
   padding: 20px 40px;
   cursor: pointer;
+  margin-top: 300px;
 
   &:hover {
-    background-color: #c78a54;
+    background-color: darkgreen;
   }
 }

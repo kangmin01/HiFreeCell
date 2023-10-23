@@ -180,3 +180,15 @@ export const failGame = async (req, res) => {
       .json({ error: "서버 오류 : 데이터베이스에 접근 중 오류 발생" });
   }
 };
+
+export const randomPlayGame = async (req, res) => {
+  try {
+    const games = await Game.find({});
+    return res.status(201).json({ length: games.length });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ error: "서버 오류 : 데이터베이스에 접근 중 오류 발생" });
+  }
+};
