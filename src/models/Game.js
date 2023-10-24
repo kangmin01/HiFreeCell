@@ -15,7 +15,9 @@ gameSchema.pre("save", function (next) {
   if (totalUsers === 0) {
     this.winRate = -1;
   } else {
-    this.winRate = (this.successfulUsers.length / totalUsers) * 100;
+    this.winRate = ((this.successfulUsers.length / totalUsers) * 100).toFixed(
+      0
+    );
   }
   next();
 });

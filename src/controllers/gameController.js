@@ -6,9 +6,26 @@ export const home = (req, res) => {
 };
 
 export const games = async (req, res) => {
-  const games = await Game.find({});
+  const {
+    session: { user },
+  } = req;
 
-  return res.render("games/games", { pageTitle: "Games", games });
+  const games = await Game.find({});
+  const users = await User.findById(user._id)
+    .populate("wonGame")
+    .populate("lostGame");
+
+  const wonGames = users.wonGame.map((x) => x.number);
+  const lostGames = users.lostGame
+    .map((x) => x.number)
+    .filter((x) => !wonGames.includes(x));
+  console.log(lostGames);
+  return res.render("games/games", {
+    pageTitle: "Games",
+    games,
+    wonGames,
+    lostGames,
+  });
 };
 
 export const playGame = async (req, res) => {

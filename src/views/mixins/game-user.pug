@@ -1,9 +1,15 @@
-mixin game(game)
+mixin game(game,wonGames,lostGames)
     a.user_game_box(href=`/games/${game.number}`)
         div.user_game_number ##{game.number}
         if game.winRate === -1
-            div.user_game_winRate -
+            div.user_game_winRate - 
         else 
             div.user_game_winRate #{game.winRate}%
         div.user_game_state
-            i.fa-regular.fa-circle-check
+            if wonGames.includes(game.number)
+                i.fa-regular.fa-circle-check
+            else if lostGames.includes(game.number)
+                i.fa-regular.fa-circle-xmark
+            else
+                i.fa-regular.fa-circle
+

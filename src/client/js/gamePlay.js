@@ -128,12 +128,25 @@ const isFailure = (column, free, home) => {
 const modalContainer = document.querySelector(".container_modal");
 const modal = document.querySelector(".modal");
 
+function secondsToHms(seconds) {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const remainingSeconds = seconds % 60;
+
+  const formattedHours = hours.toString().padStart(2, "0");
+  const formattedMinutes = minutes.toString().padStart(2, "0");
+  const formattedSeconds = remainingSeconds.toString().padStart(2, "0");
+
+  return hours === 0
+    ? `${formattedMinutes} : ${formattedSeconds}`
+    : `${formattedHours} : ${formattedMinutes} : ${formattedSeconds}`;
+}
+
 const handleSuccess = async () => {
-  alert("성공");
   stopTimer();
 
   const gameId = table.dataset.id;
-  const time = elapsedTime;
+  let time = elapsedTime;
   const response = await fetch(`/api/game/${gameId}/success`, {
     method: "POST",
     headers: {
@@ -141,13 +154,20 @@ const handleSuccess = async () => {
     },
     body: JSON.stringify({ time }),
   });
-  console.log(response);
 
+  console.log(response);
   if (response.status === 201) {
-    const { winRate, shortestTime } = await response.json();
-    console.log(time, winRate, shortestTime);
+    let { winRate, shortestTime } = await response.json();
+    if (!shortestTime) {
+      shortestTime = "-";
+    } else {
+      shortestTime = secondsToHms(shortestTime);
+    }
+    time = secondsToHms(time);
     const variables = { time, winRate, shortestTime };
     showModal("축하합니다!", variables, true);
+  } else if (response.status === 200) {
+    alert("성공");
   } else if (response.status === 500) {
     const { error } = await response.json();
     console.log(error);
@@ -221,11 +241,10 @@ const endOrUndo = () => {
 };
 
 const handleFailure = async () => {
-  alert("실패");
   stopTimer();
 
   const gameId = table.dataset.id;
-  const time = elapsedTime;
+  let time = elapsedTime;
   const response = await fetch(`/api/game/${gameId}/fail`, {
     method: "POST",
     headers: {
@@ -233,13 +252,19 @@ const handleFailure = async () => {
     },
     body: JSON.stringify({ time }),
   });
-  console.log(response);
 
   if (response.status === 201) {
-    const { winRate, shortestTime } = await response.json();
-    console.log(time, winRate, shortestTime);
+    let { winRate, shortestTime } = await response.json();
+    if (!shortestTime) {
+      shortestTime = "-";
+    } else {
+      shortestTime = secondsToHms(shortestTime);
+    }
+    time = secondsToHms(time);
     const variables = { time, winRate, shortestTime };
     showModal("게임 종료", variables, false);
+  } else if (response.status === 200) {
+    alert("실패");
   } else if (response.status === 500) {
     const { error } = await response.json();
     console.log(error);
