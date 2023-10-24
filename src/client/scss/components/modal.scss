@@ -1,3 +1,12 @@
+@keyframes modalUp {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
 .container_modal {
   position: fixed;
   width: 100%;
@@ -19,6 +28,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  animation: modalUp 0.5s;
 
   div {
     width: 460px;
