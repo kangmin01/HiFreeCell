@@ -25,13 +25,16 @@ main {
   color: white;
   background-color: green;
   text-decoration: none;
-  border: 3px solid lightgreen;
-  border-radius: 10px;
+  border: 5px solid lightgreen;
+  border-radius: 30px;
   padding: 20px 40px;
   cursor: pointer;
   margin-top: 300px;
+  transition: all 0.3s ease 0s;
 
   &:hover {
     background-color: darkgreen;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    transform: scale(1.1);
   }
 }
