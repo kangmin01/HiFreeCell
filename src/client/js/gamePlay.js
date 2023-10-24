@@ -155,7 +155,6 @@ const handleSuccess = async () => {
     body: JSON.stringify({ time }),
   });
 
-  console.log(response);
   if (response.status === 201) {
     let { winRate, shortestTime } = await response.json();
     if (!shortestTime) {

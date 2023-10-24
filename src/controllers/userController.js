@@ -318,18 +318,50 @@ export const logout = (req, res) => {
 };
 
 export const userInfo = async (req, res) => {
-  const {
+  let {
     params: { id },
     session: { user },
   } = req;
 
   const isOwner = id === user._id ? true : false;
 
-  const userInfo = await User.findById(id);
+  user = await User.findById(id);
+
+  function secondsToHms(seconds) {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = seconds % 60;
+
+    const formattedHours = hours.toString().padStart(2, "0");
+    const formattedMinutes = minutes.toString().padStart(2, "0");
+    const formattedSeconds = remainingSeconds.toString().padStart(2, "0");
+
+    return hours === 0
+      ? `${formattedMinutes} : ${formattedSeconds}`
+      : `${formattedHours} : ${formattedMinutes} : ${formattedSeconds}`;
+  }
+
+  const userData = {
+    won: user.wonGame.length,
+    lost: user.lostGame.length,
+    total: user.wonGame.length + user.lostGame.length,
+    winRate: (
+      (user.wonGame.length / (user.wonGame.length + user.lostGame.length)) *
+      100
+    ).toFixed(0),
+    short: secondsToHms(user.shortestTime),
+    avg: secondsToHms(
+      (
+        user.playTime.reduce((acc, currentValue) => acc + currentValue, 0) /
+        user.playTime.length
+      ).toFixed(0)
+    ),
+  };
 
   return res.render("users/userInfo", {
     pageTitle: "User Info",
-    userInfo,
+    user,
+    userData,
     isOwner,
   });
 };
