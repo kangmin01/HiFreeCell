@@ -138,8 +138,8 @@ function secondsToHms(seconds) {
   const formattedSeconds = remainingSeconds.toString().padStart(2, "0");
 
   return hours === 0
-    ? `${formattedMinutes} : ${formattedSeconds}`
-    : `${formattedHours} : ${formattedMinutes} : ${formattedSeconds}`;
+    ? `${formattedMinutes}:${formattedSeconds}`
+    : `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
 }
 
 const handleSuccess = async () => {
@@ -163,7 +163,7 @@ const handleSuccess = async () => {
       shortestTime = secondsToHms(shortestTime);
     }
     time = secondsToHms(time);
-    winRate = winRate + " %";
+    winRate = winRate + "%";
     const variables = { time, winRate, shortestTime };
     showModal("축하합니다!", variables, true);
   } else if (response.status === 200) {
@@ -225,6 +225,7 @@ const showModal = (titleText, variables, isSucceeded) => {
   }
 
   modalContainer.style.display = "flex";
+  newGameModal.style.display = "none";
 };
 
 const endOrUndo = () => {
@@ -261,7 +262,7 @@ const handleFailure = async () => {
       shortestTime = secondsToHms(shortestTime);
     }
     time = secondsToHms(time);
-    winRate = winRate + " %";
+    winRate = winRate + "%";
     const variables = { time, winRate, shortestTime };
     showModal("게임 종료", variables, false);
   } else if (response.status === 200) {
@@ -534,8 +535,27 @@ for (let card of cards) {
   });
 }
 
-const handleNewGame = () => {
-  console.log("New game");
+const newGameModal = document.querySelector(".newGame_modal");
+
+const handleNewGame = async () => {
+  modalContainer.style.display = "flex";
+  modal.style.display = "none";
+
+  const yesBtn = document.querySelector(".yesBtn");
+  const noBtn = document.querySelector(".noBtn");
+
+  yesBtn.addEventListener("click", async () => {
+    const response = await fetch("/api/game/play", {
+      method: "GET",
+    });
+    const { length } = await response.json();
+    const num = Math.floor((length + 1) * Math.random());
+    window.location.href = `/games/${num}`;
+  });
+
+  noBtn.addEventListener("click", () => {
+    modalContainer.style.display = "none";
+  });
 };
 
 const handleRetry = (req, res) => {

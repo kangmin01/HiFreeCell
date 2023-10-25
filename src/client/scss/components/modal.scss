@@ -88,3 +88,41 @@
     }
   }
 }
+
+// new game button
+.newGame_modal {
+  width: 800px;
+  height: 240px;
+  background-color: darkgreen;
+  border: 3px solid white;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  animation: modalUp 0.5s;
+
+  .newGame {
+    font-size: 24px;
+    color: white;
+    margin-bottom: 50px;
+  }
+
+  button {
+    color: black;
+    font-size: 18px;
+    padding: 10px 30px;
+    background-color: white;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+
+    &:hover {
+      background-color: rgba(235, 235, 235, 0.9);
+    }
+  }
+
+  button:not(:last-child) {
+    margin-right: 40px;
+  }
+}
