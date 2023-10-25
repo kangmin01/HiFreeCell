@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 html,
 body {
   height: 100%;
@@ -13,6 +17,29 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+  }
+}
+
+.slide_container {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+
+  .slide {
+    display: flex;
+    transition: all 0.5s;
+
+    li {
+      img {
+        width: 100vw;
+        height: 100vh;
+        filter: brightness(40%);
+        object-fit: cover;
+      }
+    }
   }
 }
 
@@ -20,7 +47,8 @@ main {
   // -webkit-appearance: none;
   // -moz-appearance: none;
   // appearance: none;
-
+  position: absolute;
+  top: 460px;
   font-size: 130px;
   color: white;
   background-color: green;
@@ -29,7 +57,6 @@ main {
   border-radius: 30px;
   padding: 20px 40px;
   cursor: pointer;
-  margin-top: 300px;
   transition: all 0.3s ease 0s;
 
   &:hover {

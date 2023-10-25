@@ -3,6 +3,12 @@ include mixins/card
 
 block content
     div.main_home
+        div.slide_container
+            ul.slide
+                each num in [1,2,3,4]
+                    li
+                        img(src=`/images/bgi${num}.jpg` alt=`Card Image #${num}`)
+            
         button.btn_play_freecell
             span Play FreeCell! &rarr;
 

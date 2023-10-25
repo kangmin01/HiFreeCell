@@ -163,6 +163,7 @@ const handleSuccess = async () => {
       shortestTime = secondsToHms(shortestTime);
     }
     time = secondsToHms(time);
+    winRate = winRate + " %";
     const variables = { time, winRate, shortestTime };
     showModal("축하합니다!", variables, true);
   } else if (response.status === 200) {
@@ -260,6 +261,7 @@ const handleFailure = async () => {
       shortestTime = secondsToHms(shortestTime);
     }
     time = secondsToHms(time);
+    winRate = winRate + " %";
     const variables = { time, winRate, shortestTime };
     showModal("게임 종료", variables, false);
   } else if (response.status === 200) {
