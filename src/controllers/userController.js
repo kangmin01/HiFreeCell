@@ -2,6 +2,8 @@ import Game from "../models/Game";
 import User from "../models/User";
 import bcrypt from "bcrypt";
 
+const isFly = process.env.NODE_ENV === "production";
+
 export const getJoin = (req, res) => {
   return res.render("join", { pageTitle: "Join" });
 };
@@ -34,7 +36,7 @@ export const postJoin = async (req, res) => {
         name,
         username,
         email,
-        avatar: file.path,
+        avatar: isFly ? file.location : file.path,
         password,
         role: "admin",
       });
@@ -246,7 +248,7 @@ export const postEdit = async (req, res) => {
     const updatedUser = await User.findByIdAndUpdate(
       _id,
       {
-        avatar: file ? file.path : avatar,
+        avatar: file ? (isFly ? file.location : file.path) : avatar,
         name,
         username,
         email,
