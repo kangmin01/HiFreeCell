@@ -53,10 +53,12 @@ const multerUploader = multerS3({
   },
 });
 
+const isFly = process.env.NODE_ENV === "production";
+
 export const avatarUpload = multer({
   dest: "uploads/avatars/",
   limits: {
     fileSize: 3000000,
   },
-  storage: multerUploader,
+  storage: isFly ? multerUploader : undefined,
 });
