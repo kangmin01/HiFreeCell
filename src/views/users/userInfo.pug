@@ -6,7 +6,7 @@ block content
             div.profile_container
                 div.box_avatar  
                     if user.socialOnly
-                        img(src=userInfo.avatar)
+                        img(src=user.avatar)
                     else
                         img(src="/" + user.avatar)
                     if isOwner

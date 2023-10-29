@@ -45,10 +45,16 @@ const s3 = new S3Client({
 const multerUploader = multerS3({
   s3: s3,
   bucket: "hifreecell-mini",
+  acl: "public-read",
+  key: function (request, file, ab_callback) {
+    const newFileName = Date.now() + "-" + file.originalname;
+    const fullPath = "uploads/" + newFileName;
+    ab_callback(null, fullPath);
+  },
 });
 
 export const avatarUpload = multer({
-  dest: "uploads/",
+  dest: "uploads/avatars/",
   limits: {
     fileSize: 3000000,
   },
