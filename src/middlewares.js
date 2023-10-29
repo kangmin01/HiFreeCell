@@ -1,4 +1,6 @@
 import multer from "multer";
+import multerS3 from "multer-s3";
+import { S3Client } from "@aws-sdk/client-s3";
 
 export const localsMiddleware = (req, res, next) => {
   res.locals.loggedIn = Boolean(req.session.loggedIn);
@@ -31,6 +33,24 @@ export const adminOnlyMiddleware = (req, res, next) => {
   }
 };
 
+const s3 = new S3Client({
+  region: "us-east-1",
+  credentials: {
+    apiVersion: "2023-10-29",
+    accessKeyId: process.env.AWS_ID,
+    secretAccessKey: process.env.AWS_SECRET,
+  },
+});
+
+const multerUploader = multerS3({
+  s3: s3,
+  bucket: "hifreecell-mini",
+});
+
 export const avatarUpload = multer({
   dest: "uploads/",
+  limits: {
+    fileSize: 3000000,
+  },
+  storage: multerUploader,
 });
