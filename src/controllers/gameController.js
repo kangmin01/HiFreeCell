@@ -9,7 +9,6 @@ export const games = async (req, res) => {
   const {
     session: { user },
   } = req;
-
   const games = await Game.find({});
   const users = await User.findById(user._id)
     .populate("wonGame")

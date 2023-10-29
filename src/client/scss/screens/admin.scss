@@ -23,12 +23,12 @@
     }
 
     &.input_submit {
-      background-color: #e29c5f;
+      background-color: $brown;
       border: 1px solid black;
       cursor: pointer;
 
       &:hover {
-        background-color: rgb(212, 110, 42);
+        background-color: $dark-brown;
       }
     }
   }
@@ -71,7 +71,7 @@
     }
 
     th {
-      background-color: #e29c5f;
+      background-color: $brown;
       color: white;
       padding: 10px;
       border-bottom: 1px solid black;

@@ -5,100 +5,142 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
 
-  .form_login {
-    background-color: whitesmoke;
+.form_login {
+  background-color: whitesmoke;
+  display: flex;
+  flex-direction: column;
+  padding: 80px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  margin-top: 160px;
+
+  h1 {
+    font-size: 40px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+}
+
+.social-container {
+  display: flex;
+  justify-content: center;
+
+  a {
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
     display: flex;
-    flex-direction: column;
-    padding: 80px;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
-    margin-top: 160px;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    margin: 0 16px;
+    color: rgba(0, 0, 0, 0.8);
+
+    i {
+      font-size: 20px;
+    }
+  }
+}
+
+input {
+  background-color: rgba(0, 0, 0, 0.1);
+
+  padding: 14px;
+  border: none;
+  width: 260px;
+
+  &:first-of-type {
+    margin-top: 30px;
+  }
+
+  margin-bottom: 24px;
+}
+
+label {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+
+  input {
+    margin-left: 20px;
+  }
+
+  &:not(:first-child) input {
+    margin-top: 16px;
+  }
+}
+
+.btn_submit {
+  background-color: rgb(230, 118, 44);
+  width: 200px;
+  border: none;
+  border-radius: 30px;
+  padding: 16px;
+  margin: 0 auto;
+  margin-top: 40px;
+
+  &:hover {
+    cursor: pointer;
+    background-color: rgb(212, 110, 42);
+  }
+}
+
+.edit-profile__password {
+  margin-top: 20px;
+  text-align: center;
+  .btn_change-password {
+    text-decoration: none;
+    color: rgb(230, 118, 44);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .form_login {
+    padding: 46px 40px;
+    margin-top: 50px;
 
     h1 {
-      font-size: 40px;
-      font-weight: 600;
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    .social-container {
-      display: flex;
-      justify-content: center;
-
-      a {
-        width: 40px;
-        height: 40px;
-        border: 1px solid rgba(0, 0, 0, 0.2);
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-decoration: none;
-        margin: 0 16px;
-        color: rgba(0, 0, 0, 0.8);
-
-        i {
-          font-size: 20px;
-        }
-      }
+      font-size: 24px;
+      margin-bottom: 20px;
     }
 
     input {
-      background-color: rgba(0, 0, 0, 0.1);
-
-      padding: 14px;
-      border: none;
-      width: 260px;
-
-      &[type="password"] {
-        margin: 12px auto;
-      }
-
-      &:first-of-type {
-        margin-top: 30px;
-      }
-
-      margin-bottom: 24px;
+      width: 180px;
+      padding: 10px;
+      font-size: 12px;
+      margin-bottom: 16px;
     }
 
     label {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      text-align: center;
+      font-size: 12px;
 
       input {
-        margin-left: 20px;
-      }
-
-      &:not(:first-child) input {
-        margin-top: 16px;
+        width: 160px;
+        margin-left: 8px;
       }
     }
+  }
 
-    .btn_submit {
-      background-color: rgb(230, 118, 44);
-      width: 200px;
-      border: none;
-      border-radius: 30px;
-      padding: 16px;
-      margin: 0 auto;
-      margin-top: 40px;
+  .edit-profile__password {
+    font-size: 12px;
+    margin-top: 0;
+  }
 
-      &:hover {
-        cursor: pointer;
-        background-color: rgb(212, 110, 42);
-      }
+  .social-container a {
+    width: 30px;
+    height: 30px;
+    margin: 0 16px;
+
+    i {
+      font-size: 16px;
     }
-
-    .edit-profile__password {
-      margin-top: 20px;
-      text-align: center;
-      .btn_change-password {
-        text-decoration: none;
-        color: rgb(230, 118, 44);
-      }
-    }
+  }
+  .btn_submit {
+    margin-top: 20px;
   }
 }

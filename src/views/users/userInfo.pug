@@ -9,9 +9,9 @@ block content
                         img(src=userInfo.avatar)
                     else
                         img(src="/" + user.avatar)
-                if isOwner
-                    a(href="/users/edit")
-                        i.fa-solid.fa-pen
+                    if isOwner
+                        a(href="/users/edit")
+                            i.fa-solid.fa-pen
                 h1=user.username
                 
             div.stats_container

@@ -1,5 +1,5 @@
 header {
-  background-color: #e29c5f;
+  background-color: $brown;
   padding: 20px;
   display: flex;
   justify-content: space-between;
@@ -34,5 +34,45 @@ header {
         }
       }
     }
+  }
+}
+
+#navbar_toggleBtn {
+  display: none;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+@media screen and (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+
+    ul {
+      flex-direction: column;
+      align-items: flex-start;
+
+      li {
+        margin: 4px 0;
+        padding: 2px;
+      }
+    }
+
+    ul > li {
+      margin-top: 12px;
+    }
+  }
+
+  nav {
+    display: none;
+  }
+
+  nav.active {
+    display: flex;
+  }
+
+  #navbar_toggleBtn {
+    display: block;
   }
 }

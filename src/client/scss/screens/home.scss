@@ -8,7 +8,7 @@ body {
 }
 
 main {
-  background-color: #e29c5f;
+  background-color: $dark-brown;
   height: auto;
   min-height: 100%;
   padding-bottom: 80px;
@@ -49,7 +49,7 @@ main {
   // appearance: none;
   position: absolute;
   top: 460px;
-  font-size: 130px;
+  font-size: 8rem;
   color: white;
   background-color: green;
   text-decoration: none;
@@ -63,5 +63,20 @@ main {
     background-color: darkgreen;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
     transform: scale(1.1);
+  }
+}
+
+@media screen and (max-width: 1480px) {
+  .btn_play_freecell {
+    font-size: 5rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .btn_play_freecell {
+    font-size: 2rem;
+    top: 260px;
+    border-radius: 20px;
+    border: 3px solid lightgreen;
   }
 }

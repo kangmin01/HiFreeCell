@@ -1,7 +1,8 @@
 .user_game_container {
   display: flex;
+  width: 100%;
   flex-wrap: wrap;
-  padding: 0 300px;
+  padding: 0 200px;
   padding-top: 100px;
 }
 
@@ -15,9 +16,8 @@
   justify-content: space-around;
   width: 140px;
   font-size: 20px;
-  padding: 22px;
-  padding-top: 26px;
-  margin: 30px;
+  padding: 30px;
+  margin: 30px 38px;
   position: relative;
   cursor: pointer;
   transition: all 0.3s ease 0s;
@@ -45,5 +45,27 @@
   }
   .fa-circle {
     color: rgba(255, 255, 255, 0.2);
+  }
+}
+
+@media screen and (max-width: 1480px) {
+  .user_game_container {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .user_game_container {
+    padding: 0;
+    padding-top: 40px;
+  }
+  .user_game_box {
+    width: 120px;
+    padding: 20px;
+    margin: 18px 22px;
+  }
+  .user_game_winRate {
+    margin-right: 6px;
   }
 }

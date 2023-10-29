@@ -7,6 +7,7 @@
   text-align: center;
   font-size: 22px;
   border-radius: 30px;
+  width: 100%;
 
   .game_header_child {
     flex: 1;
@@ -31,28 +32,26 @@
     width: 150px;
     height: 60px;
   }
+}
 
-  .box_game_btn {
-    button {
-      width: 100px;
-      height: 40px;
-      margin-right: 10px;
-      border-radius: 10px;
-      cursor: pointer;
-    }
+.box_game_btn {
+  button {
+    width: 100px;
+    height: 40px;
+    margin-right: 10px;
+    border-radius: 10px;
+    cursor: pointer;
   }
 }
 
 .cell {
   width: 100%;
-  height: 150px;
   display: flex;
   justify-content: space-around;
   padding-top: 50px;
 
   .freeCell,
   .homeCell {
-    height: 100%;
     display: flex;
     justify-content: center;
   }
@@ -93,24 +92,180 @@
   width: 100%;
   justify-content: center;
   padding: 150px 0;
+}
+
+.column {
+  margin: 0 20px;
+  width: 100px;
+}
+
+.card {
+  width: 100px;
+  cursor: pointer;
+
+  &:not(:first-child) {
+    margin-top: -94px;
+  }
+
+  img {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 1300px) {
+  .table {
+    width: 800px;
+  }
+
+  .game_header {
+    font-size: 16px;
+
+    #time {
+      height: 50px;
+    }
+  }
+
+  .box_game_btn {
+    button {
+      font-size: 12px;
+      width: 70px;
+      height: 40px;
+      margin-right: 10px;
+    }
+  }
+
+  .cell {
+    padding-top: 50px;
+
+    .freeCell .free,
+    .homeCell .home {
+      border: 2px mediumseagreen solid;
+      width: 60px;
+      height: 84px;
+      margin: 0 12px;
+    }
+  }
+
+  .deck {
+    padding: 50px 0;
+  }
 
   .column {
-    margin: 0 20px;
-    width: 100px;
+    margin: 0 14px;
+    width: 60px;
+  }
 
-    .card {
-      width: 100px;
-      cursor: pointer;
+  .card {
+    width: 60px;
 
-      &:not(:first-child) {
-        margin-top: -100px;
-      }
+    &:not(:first-child) {
+      margin-top: -58px;
+    }
+  }
+}
 
-      img {
-        width: 100%;
-      }
+@media screen and (max-width: 768px) {
+  .table {
+    width: 480px;
+  }
 
-      // 클릭하고 드래그 할 때 그림자 추가
+  .game_header {
+    font-size: 10px;
+
+    #time {
+      height: 30px;
+    }
+  }
+
+  .box_game_btn {
+    button {
+      font-size: 8px;
+      width: 50px;
+      height: 24px;
+      margin-right: 5px;
+    }
+  }
+
+  .cell {
+    padding-top: 26px;
+
+    .freeCell .free,
+    .homeCell .home {
+      border: 1.4px mediumseagreen solid;
+      width: 40px;
+      height: 56px;
+      margin: 0 6px;
+    }
+  }
+
+  .deck {
+    padding: 34px 0;
+  }
+
+  .column {
+    margin: 0 7px;
+    width: 40px;
+  }
+
+  .card {
+    width: 40px;
+
+    &:not(:first-child) {
+      margin-top: -39px;
+    }
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .main_game {
+    padding-top: 30px;
+  }
+
+  .table {
+    width: 360px;
+  }
+
+  .game_header {
+    font-size: 10px;
+
+    #time {
+      height: 30px;
+    }
+  }
+
+  .box_game_btn {
+    button {
+      font-size: 6px;
+      width: 36px;
+      height: 24px;
+      margin-right: 5px;
+      border-radius: 7px;
+      border: 0.1px solid rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  .cell {
+    padding-top: 26px;
+
+    .freeCell .free,
+    .homeCell .home {
+      border: 1px mediumseagreen solid;
+      width: 32px;
+      height: 45px;
+      margin: 0 4px;
+    }
+  }
+
+  .column {
+    margin: 0 4px;
+    width: 32px;
+  }
+
+  .card {
+    width: 32px;
+
+    &:not(:first-child) {
+      margin-top: -32px;
     }
   }
 }
