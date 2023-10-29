@@ -4,8 +4,12 @@
   "description": "FreeCell game",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon",
-    "assets": "webpack"
+    "dev:server": "nodemon",
+    "dev:assets": "webpack --mode=development -w",
+    "build:server": "babel src -d build",
+    "build:assets": "webpack --mode=production",
+    "start": "node build/init.js",
+    "build": "npm run build:server && npm run build:assets"
   },
   "repository": {
     "type": "git",
@@ -30,6 +34,7 @@
     "pug": "^3.0.2"
   },
   "devDependencies": {
+    "@babel/cli": "^7.23.0",
     "@babel/core": "^7.22.15",
     "@babel/node": "^7.22.15",
     "@babel/preset-env": "^7.22.15",
