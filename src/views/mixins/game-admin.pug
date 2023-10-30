@@ -3,6 +3,6 @@ mixin game(game)
         td
             input(type="checkbox")
         td.game_number=game.number
-        td.game_played 24
+        td.game_played=game.successfulUsers.length + game.failedUsers.length
         td.game_winRate=game.winRate
-        td.game_averageTime=game.playTime 
+        td.game_shortestTime=game.shortestTime ? game.shortestTime : "-"

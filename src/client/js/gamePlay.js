@@ -279,14 +279,14 @@ window.onbeforeunload = function (e) {
 };
 
 // 테스트용 버튼
-const success = document.querySelector(".btn_success");
-const fail = document.querySelector(".btn_fail");
-success.addEventListener("click", () => {
-  handleSuccess();
-});
-fail.addEventListener("click", () => {
-  handleFailure();
-});
+// const success = document.querySelector(".btn_success");
+// const fail = document.querySelector(".btn_fail");
+// success.addEventListener("click", () => {
+//   handleSuccess();
+// });
+// fail.addEventListener("click", () => {
+//   handleFailure();
+// });
 
 // drag ui
 let targetImg;

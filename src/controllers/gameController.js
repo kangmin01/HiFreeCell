@@ -39,6 +39,7 @@ export const playGame = async (req, res) => {
 
 export const getCreateGame = async (req, res) => {
   const games = await Game.find({});
+  console.log(games);
 
   return res.render("admin", { pageTitle: "admin", games });
 };

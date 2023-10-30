@@ -364,7 +364,6 @@ export const userInfo = async (req, res) => {
         )
       : "-",
   };
-  console.log(user.shortestTime, user.playTime, userData);
 
   return res.render("users/userInfo", {
     pageTitle: "User Info",

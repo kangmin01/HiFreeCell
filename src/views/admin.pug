@@ -7,9 +7,6 @@ block content
             form(method="post")
                 input.input_num(placeholder=1, name="num", type="number", required)
                 input.input_submit(type="submit", value="Create Game")
-        div.container_searchGame
-            input(placeholder="Search game", name="title", type="number", required)
-            i.fa-solid.fa-magnifying-glass
         div.container_gameTable
             table 
                 thead.row_head 
@@ -18,8 +15,8 @@ block content
                             input(type="checkbox")
                         th Number
                         th Challenge
-                        th winRate 
-                        th average time
+                        th WinRate 
+                        th Shortest Time (s)
                 tbody
                     each game in games
                         +game(game)
