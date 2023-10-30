@@ -21,7 +21,7 @@ header
                     li 
                         a(href=`/users/${loggedInUser._id}`)
                             if loggedInUser.socialOnly || isFly
-                                img(src=loggedInUser.avatar, crossorigin)
+                                img(src=loggedInUser.avatar)
                             else
                                 img(src="/" + loggedInUser.avatar)
                 else 
