@@ -354,14 +354,17 @@ export const userInfo = async (req, res) => {
       (user.wonGame.length / (user.wonGame.length + user.lostGame.length)) *
       100
     ).toFixed(0),
-    short: secondsToHms(user.shortestTime),
-    avg: secondsToHms(
-      (
-        user.playTime.reduce((acc, currentValue) => acc + currentValue, 0) /
-        user.playTime.length
-      ).toFixed(0)
-    ),
+    short: user.shortestTime ? secondsToHms(user.shortestTime) : "-",
+    avg: user.playTime.length
+      ? secondsToHms(
+          (
+            user.playTime.reduce((acc, currentValue) => acc + currentValue, 0) /
+            user.playTime.length
+          ).toFixed(0)
+        )
+      : "-",
   };
+  console.log(user.shortestTime, user.playTime, userData);
 
   return res.render("users/userInfo", {
     pageTitle: "User Info",

@@ -97,18 +97,18 @@
 .column {
   margin: 0 20px;
   width: 100px;
-}
 
-.card {
-  width: 100px;
-  cursor: pointer;
+  .card {
+    width: 100px;
+    cursor: pointer;
 
-  &:not(:first-child) {
-    margin-top: -94px;
-  }
+    &:not(:first-child) {
+      margin-top: -94px;
+    }
 
-  img {
-    width: 100%;
+    img {
+      width: 100%;
+    }
   }
 }
 
@@ -153,13 +153,13 @@
   .column {
     margin: 0 14px;
     width: 60px;
-  }
 
-  .card {
-    width: 60px;
+    .card {
+      width: 60px;
 
-    &:not(:first-child) {
-      margin-top: -58px;
+      &:not(:first-child) {
+        margin-top: -58px;
+      }
     }
   }
 }
@@ -205,13 +205,13 @@
   .column {
     margin: 0 7px;
     width: 40px;
-  }
 
-  .card {
-    width: 40px;
+    .card {
+      width: 40px;
 
-    &:not(:first-child) {
-      margin-top: -39px;
+      &:not(:first-child) {
+        margin-top: -39px;
+      }
     }
   }
 }
@@ -259,13 +259,13 @@
   .column {
     margin: 0 4px;
     width: 32px;
-  }
 
-  .card {
-    width: 32px;
+    .card {
+      width: 32px;
 
-    &:not(:first-child) {
-      margin-top: -32px;
+      &:not(:first-child) {
+        margin-top: -32px;
+      }
     }
   }
 }
