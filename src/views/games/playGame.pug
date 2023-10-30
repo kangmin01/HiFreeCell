@@ -22,7 +22,7 @@ block content
                         div(id=`free${id}` class="free")
                 div.homeCell
                     each id in ["c0","d1","s2","h3"]
-                        div(id=`${id[0]}home${Number(id[1])}` class="home" style=`background-image: https://hifreecell-mini.s3.amazonaws.com/images/${id}.png`)
+                        div(id=`${id[0]}home${Number(id[1])}` class="home" style=`background-image: url('https://hifreecell-mini.s3.amazonaws.com/images/${id}.png')`)
             div.deck
                 each column, idx in game.deck
                     div(id=`column${idx}` class="column")
