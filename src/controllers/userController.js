@@ -83,6 +83,7 @@ export const postLogin = async (req, res) => {
   }
 
   req.session.loggedIn = true;
+  req.session.isFly = isFly;
 
   if (username === "admin") {
     req.session.admin = true;
@@ -146,6 +147,7 @@ export const googleOauthCallback = async (req, res) => {
 
     req.session.loggedIn = true;
     req.session.user = user;
+    req.session.isFly = isFly;
     return res.redirect("/");
   } else {
     return res.redirect("/login");
@@ -214,6 +216,7 @@ export const kakaoOauthCallback = async (req, res) => {
     }
     req.session.loggedIn = true;
     req.session.user = user;
+    req.session.isFly = isFly;
     return res.redirect("/");
   } else {
     return res.redirect("/login");

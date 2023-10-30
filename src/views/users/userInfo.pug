@@ -5,7 +5,7 @@ block content
         div.userInfo_container
             div.profile_container
                 div.box_avatar  
-                    if user.socialOnly
+                    if loggedInUser.socialOnly || isFly
                         img(src=user.avatar)
                     else
                         img(src="/" + user.avatar)

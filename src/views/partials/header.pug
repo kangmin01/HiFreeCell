@@ -20,7 +20,7 @@ header
                         a(href="/users/edit") Edit profile
                     li 
                         a(href=`/users/${loggedInUser._id}`)
-                            if loggedInUser.socialOnly
+                            if loggedInUser.socialOnly || isFly
                                 img(src=loggedInUser.avatar)
                             else
                                 img(src="/" + loggedInUser.avatar)
