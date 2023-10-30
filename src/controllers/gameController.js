@@ -18,7 +18,7 @@ export const games = async (req, res) => {
   const lostGames = users.lostGame
     .map((x) => x.number)
     .filter((x) => !wonGames.includes(x));
-  console.log(lostGames);
+
   return res.render("games/games", {
     pageTitle: "Games",
     games,
