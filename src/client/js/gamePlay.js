@@ -274,8 +274,10 @@ const handleFailure = async () => {
 };
 
 window.onbeforeunload = function (e) {
-  e.preventDefault();
-  handleFailure();
+  if (!e.persisted) {
+    e.preventDefault();
+    handleFailure();
+  }
 };
 
 // 테스트용 버튼
@@ -571,7 +573,6 @@ const handleUndo = () => {
   if (undoStack.length !== 0) {
     const undo = undoStack.pop();
     [draggedCard, originalColumn, targetColumn] = undo;
-    // targetColumn.removeChild(draggedCard);
     originalColumn.appendChild(draggedCard);
 
     if (targetColumn.classList.contains("home")) {
