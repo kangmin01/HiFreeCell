@@ -39,7 +39,6 @@ export const playGame = async (req, res) => {
 
 export const getCreateGame = async (req, res) => {
   const games = await Game.find({});
-  console.log(games);
 
   return res.render("admin", { pageTitle: "admin", games });
 };
@@ -98,13 +97,13 @@ export const postCreateGame = async (req, res) => {
   const { num } = req.body;
 
   try {
-    const games = await Game.find({});
+    const lastGame = await Game.find().sort({ number: -1 }).limit(1).exec();
 
     for (let i = 1; i <= num; i++) {
       const deck = makeDeck();
 
       await Game.create({
-        number: games.length + i,
+        number: lastGame[0].number + i,
         deck,
       });
     }
