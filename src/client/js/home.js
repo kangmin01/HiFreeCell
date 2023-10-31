@@ -4,9 +4,9 @@ const randomPlay = async () => {
   const response = await fetch("/api/game/play", {
     method: "GET",
   });
-  const { length } = await response.json();
-  const num = Math.floor((length + 1) * Math.random());
-  window.location.href = `/games/${num}`;
+  const { gamesNum } = await response.json();
+  const num = Math.floor(gamesNum.length * Math.random());
+  window.location.href = `/games/${num + 1}`;
 };
 
 playFreecellBtn.addEventListener("click", randomPlay);

@@ -199,8 +199,10 @@ export const failGame = async (req, res) => {
 
 export const randomPlayGame = async (req, res) => {
   try {
-    const games = await Game.find({});
-    return res.status(201).json({ length: games.length });
+    const games = await Game.find({}, "number").lean();
+    const gamesNum = games.map((game) => game.number);
+    console.log(gamesNum);
+    return res.status(201).json({ gamesNum });
   } catch (error) {
     return res
       .status(500)
