@@ -164,7 +164,6 @@ export const failGame = async (req, res) => {
   const {
     session: { user },
     params: { id },
-    body: { time },
   } = req;
 
   try {

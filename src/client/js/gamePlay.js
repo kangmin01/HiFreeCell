@@ -248,10 +248,6 @@ const handleFailure = async () => {
   let time = elapsedTime;
   const response = await fetch(`/api/game/${gameId}/fail`, {
     method: "POST",
-    headers: {
-      "Content-type": "application/json",
-    },
-    body: JSON.stringify({ time }),
   });
 
   if (response.status === 201) {
@@ -274,9 +270,10 @@ const handleFailure = async () => {
 };
 
 window.onbeforeunload = function (e) {
-  if (!e.persisted) {
-    e.preventDefault();
+  if (!isRetry) {
+    // e.preventDefault();
     handleFailure();
+    isRetry = false;
   }
 };
 
@@ -552,7 +549,6 @@ const handleNewGame = async () => {
   const noBtn = document.querySelector(".noBtn");
 
   yesBtn.addEventListener("click", async () => {
-    handleFailure();
     const response = await fetch("/api/game/play", {
       method: "GET",
     });
@@ -566,7 +562,10 @@ const handleNewGame = async () => {
   });
 };
 
+let isRetry = false;
+
 const handleRetry = (req, res) => {
+  isRetry = true;
   window.location.reload();
 };
 
