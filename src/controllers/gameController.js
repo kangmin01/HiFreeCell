@@ -203,7 +203,21 @@ export const randomPlayGame = async (req, res) => {
     const games = await Game.find({});
     return res.status(201).json({ length: games.length });
   } catch (error) {
-    console.log(error);
+    return res
+      .status(500)
+      .json({ error: "서버 오류 : 데이터베이스에 접근 중 오류 발생" });
+  }
+};
+
+export const deleteGame = async (req, res) => {
+  const {
+    body: { checkedGames },
+  } = req;
+
+  try {
+    await Game.deleteMany({ number: { $in: checkedGames } });
+    return res.sendStatus(200);
+  } catch (error) {
     return res
       .status(500)
       .json({ error: "서버 오류 : 데이터베이스에 접근 중 오류 발생" });

@@ -1,7 +1,7 @@
 mixin game(game)
     tr 
         td
-            input(type="checkbox")
+            input(type="checkbox", id=`game${game.number}`).gameCheck
         td.game_number=game.number
         td.game_played=game.successfulUsers.length + game.failedUsers.length
         td.game_winRate=game.winRate

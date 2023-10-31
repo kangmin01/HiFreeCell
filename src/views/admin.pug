@@ -7,12 +7,14 @@ block content
             form(method="post")
                 input.input_num(placeholder=1, name="num", type="number", required)
                 input.input_submit(type="submit", value="Create Game")
+        div 
+            button#deleteGameBtn 선택게임 삭제
         div.container_gameTable
             table 
                 thead.row_head 
                     tr
                         th 
-                            input(type="checkbox")
+                            input(type="checkbox")#checkAll
                         th Number
                         th Challenge
                         th WinRate 
@@ -20,3 +22,6 @@ block content
                 tbody
                     each game in games
                         +game(game)
+
+block scripts
+    script(src="/static/js/admin.js")
