@@ -36,6 +36,15 @@
   }
 }
 
+#deleteGameBtn {
+  position: relative;
+  padding: 8px;
+  right: 174px;
+  border: 0.5px solid rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
 .container_gameTable {
   padding: 10px;
 
