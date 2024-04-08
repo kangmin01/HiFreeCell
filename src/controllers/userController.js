@@ -46,7 +46,7 @@ export const postJoin = async (req, res) => {
       name,
       username,
       email,
-      avatar: file.path,
+      avatar: isFly ? file.location : file.path,
       password,
     });
     return res.redirect("/login");
