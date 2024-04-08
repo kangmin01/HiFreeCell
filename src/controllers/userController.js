@@ -1,6 +1,6 @@
-import Game from "../models/Game";
 import User from "../models/User";
 import bcrypt from "bcrypt";
+require("dotenv").config();
 
 const isFly = process.env.NODE_ENV === "production";
 
