@@ -99,7 +99,9 @@ export const googleOauth = (req, res) => {
   const config = {
     client_id: process.env.GG_CLIENT,
     response_type: "code",
-    redirect_uri: "http://localhost:3000/users/oauth/google/callback",
+    redirect_uri: isFly
+      ? `${process.env.HF_URL}/users/oauth/google/callback`
+      : "http://localhost:3000/users/oauth/google/callback",
     scope: "email profile",
   };
   const params = new URLSearchParams(config).toString();
@@ -113,7 +115,9 @@ export const googleOauthCallback = async (req, res) => {
     code: req.query.code,
     client_id: process.env.GG_CLIENT,
     client_secret: process.env.GG_SECRET,
-    redirect_uri: "http://localhost:3000/users/oauth/google/callback",
+    redirect_uri: isFly
+      ? `${process.env.HF_URL}/users/oauth/google/callback`
+      : "http://localhost:3000/users/oauth/google/callback",
     grant_type: "authorization_code",
   };
   const params = new URLSearchParams(config).toString();
@@ -158,7 +162,9 @@ export const kakaoOauth = (req, res) => {
   const baseUri = "https://kauth.kakao.com/oauth/authorize";
   const config = {
     client_id: process.env.KA_CLIENT,
-    redirect_uri: "http://localhost:3000/users/oauth/kakao/callback",
+    redirect_uri: isFly
+      ? `${process.env.HF_URL}/users/oauth/kakao/callback`
+      : "http://localhost:3000/users/oauth/kakao/callback",
     response_type: "code",
   };
   const params = new URLSearchParams(config).toString();
@@ -171,7 +177,9 @@ export const kakaoOauthCallback = async (req, res) => {
   const config = {
     grant_type: "authorization_code",
     client_id: process.env.KA_CLIENT,
-    redirect_uri: "http://localhost:3000/users/oauth/kakao/callback",
+    redirect_uri: isFly
+      ? `${process.env.HF_URL}/users/oauth/kakao/callback`
+      : "http://localhost:3000/users/oauth/kakao/callback",
     code: req.query.code,
   };
   const params = new URLSearchParams(config).toString();
